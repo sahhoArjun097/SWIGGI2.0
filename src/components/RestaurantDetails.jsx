@@ -12,26 +12,35 @@ function RestaurantDetails() {
   const [info, setMenuinfo] = useState("");
   const [deals, setOffer] = useState([])
   const[extra,setExtra] = useState([])
-  const[inner,setInner]=useState([])
+
+  // const[inner,setInner]=useState([])
   async function fetchMenu() {
     const data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.18260&lng=78.02560&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`)
     const result = await data.json();
-    // console.log(result?.data?.cards)  
+    console.log(result?.data?.cards)  
     setMenu(result?.data?.cards[0]?.card?.card?.text)
     setMenuinfo(result?.data?.cards[2]?.card?.card?.info)
-    console.log(setMenuinfo)
     setOffer(result?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers)
-    console.log(setOffer)
-    
     let  sort = (result?.data?.cards)?.filter(data=>data?.groupedCard?.cardGroupMap) 
     console.log(sort)
-    setExtra(sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
-    console.log(setExtra)
-    // let actualData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
-    // let cakeData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.categories)
-    // setExtra(result?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards)
-    // console.log(actualData)
-    // console.log(cakeData)
+    let actualData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
+    let cakeData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.categories)
+    console.log(actualData)
+    console.log(cakeData)
+    setExtra(actualData)?.filter((data)=> data?.card?.card?.titles)
+    console.log(actualData?.card?.card)?.filter((data)=> data?.itemCards)
+
+    // let combinedData = [...(actualData || []), ...(cakeData || [])];
+    // setExtra(combinedData)?.filter((data)=> data?.card?.card?.titles)
+// console.log(combinedData)
+    // console.log(combinedData)?.filter((data)=> data?.card?.card?.itemCards)
+
+
+    // let more = (combinedData)
+
+
+   
+    // console.log(setExtra)  
     // setInner(setExtra?.card?.card)
     // console.log(setInner)
     // console.log(sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.map(data=>data?.card?.card?.itemCards?.card?.info?.name)
@@ -203,7 +212,7 @@ function RestaurantDetails() {
                     </div>
                   ))
                 } */}
-
+        
                 {
                   extra.map(({card:{card: {title}}},i)=>(
                     <div key={i}>
@@ -212,14 +221,13 @@ function RestaurantDetails() {
                     
                       <i className="fi fi-rr-angle-small-down"></i>
                     </div>
-                    {
+                    {/* {
                       inner.map((item,i)=>(
                         <div key={i}>
                           <p>{item?.card?.info?.name}</p>
                           </div>
-                          
                       ))
-                    }
+                    } */}
                     <hr/>
                     </div>
               
