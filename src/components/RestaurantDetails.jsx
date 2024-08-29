@@ -12,8 +12,9 @@ function RestaurantDetails() {
   const [info, setMenuinfo] = useState("");
   const [deals, setOffer] = useState([])
   const[extra,setExtra] = useState([])
+  const[drop,setDrop] = useState(null)
 
-  // const[inner,setInner]=useState([])
+  const[inner,setInner]=useState([])
   async function fetchMenu() {
     const data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.18260&lng=78.02560&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`)
     const result = await data.json();
@@ -24,22 +25,20 @@ function RestaurantDetails() {
     let  sort = (result?.data?.cards)?.filter(data=>data?.groupedCard?.cardGroupMap) 
     console.log(sort)
     let actualData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
-    let cakeData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.categories)
+    let cakeData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
     console.log(actualData)
-    console.log(cakeData)
-    setExtra(actualData)?.filter((data)=> data?.card?.card?.titles)
-    console.log(actualData?.card?.card)?.filter((data)=> data?.itemCards)
+    // console.log(cakeData)
+    let combinedData = [...(actualData || []), ...(cakeData || [])];
+    console.log(combinedData)
+    setExtra(combinedData)?.filter((data)=> data?.card?.card?.titles)
+    // let precice = (actualData)
+    // console.log(precice)
+    setInner(actualData[0]?.card?.card)
+    console.log(combinedData?.card)
 
-    // let combinedData = [...(actualData || []), ...(cakeData || [])];
-    // setExtra(combinedData)?.filter((data)=> data?.card?.card?.titles)
 // console.log(combinedData)
     // console.log(combinedData)?.filter((data)=> data?.card?.card?.itemCards)
-
-
     // let more = (combinedData)
-
-
-   
     // console.log(setExtra)  
     // setInner(setExtra?.card?.card)
     // console.log(setInner)
@@ -70,6 +69,13 @@ function RestaurantDetails() {
       // setColor('text-gray-900');
     }
   }
+  // function moveup(i) {
+  //   if (i === drop) {
+  //     setDrop(null); 
+  //   } else {
+  //     setDrop(i);
+  //   }
+  // }
   useEffect(() => {
     fetchMenu()
   }, []);
@@ -192,47 +198,16 @@ function RestaurantDetails() {
           </div>
           <hr/>
           <div className='gap-5 flex-col'>
-                {/* {
-                  extra.map((items,i)=>(
-                    <div key={i} className='gap-5 flex-col'> 
-                 <div className='justify-between flex'>
-                  <p>{items?.card?.card?.title}{items?.card?.itemcard}</p>
-                  <i className="fi fi-rr-angle-small-down"></i>
-                 </div>
-                 <div className='h-[200px] w-full'>
-                   {
-                    inner.map((items,i)=>(
-                      <div key={i}>
-                        {items?.card?.info?.name}
-                        </div>
-                    ))
-                   }
-                 </div>
-                 <hr/>
-                    </div>
-                  ))
-                } */}
-        
-                {
-                  extra.map(({card:{card: {title}}},i)=>(
-                    <div key={i}>
-                       <div className='flex justify-between'>
-                      <h1>{title}</h1>
-                    
-                      <i className="fi fi-rr-angle-small-down"></i>
-                    </div>
-                    {/* {
-                      inner.map((item,i)=>(
-                        <div key={i}>
-                          <p>{item?.card?.info?.name}</p>
-                          </div>
-                      ))
-                    } */}
-                    <hr/>
-                    </div>
-              
-                  ))
-                }
+            {
+              extra.map(({card:{card:{itemCards,titles}}},i)=>(
+                <div key={i}>
+                  <div className='flex justify-between'>
+                    <p>{titles}</p>
+                  </div>
+
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -241,3 +216,42 @@ function RestaurantDetails() {
 }
 
 export default RestaurantDetails
+
+
+  //  {/* extra.map(({card:{card:{itemCards:{title}}}} ,i */}
+  //  {
+  //   extra.map((item ,i)=>(
+  //     <div key={i} className='pt-6'>
+  //        <div className='flex justify-between text-xl font-bold p-5'>
+  //       <h1>{item?.card?.card?.title}</h1>
+  //       {
+  //     // drop === i && 
+  //       inner.map((item,i)=>(
+  //         <div key={i} className='flex-col p-5'>
+  //           <div className=''>
+  //             <p>{item?.card?.info?.name}</p>
+  //           </div>
+  //           <div className=''>
+  //             <p>{item?.card?.info?.price/100}</p>
+  //             <p></p>
+
+  //           </div>
+
+            {/* <div>
+            <img src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/${item?.card?.info?.imageId}`} alt="" className=" h-[41px] " />
+              </div> */}
+
+          {/* </div>
+         
+        )) */}
+      // }/
+      {/* <div>
+        <i className="fi fi-rr-angle-small-up text-2xl" onClick={()=> moveup(i)}></i>
+      </div> */}
+      {/* </div>
+      
+      <hr/>
+      </div>
+
+    ))
+  } */}
