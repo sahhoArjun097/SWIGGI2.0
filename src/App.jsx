@@ -3,7 +3,7 @@ import '@flaticon/flaticon-uicons/css/all/all.css';
 import Head from './components/Head'
 import Home from './components/Home'
 import { Route, Routes } from 'react-router-dom';
-import RestaurantDetails from './components/RestaurantDetails';
+import RestaurantDetails from './components/RestaurantDetails/RestaurantDetails';
 // import TopItems from './components/TopItems'
 export const App = () => {
   return (
