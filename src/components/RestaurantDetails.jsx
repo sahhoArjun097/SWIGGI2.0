@@ -12,35 +12,38 @@ function RestaurantDetails() {
   const [info, setMenuinfo] = useState("");
   const [deals, setOffer] = useState([])
   const[extra,setExtra] = useState([])
-  const[drop,setDrop] = useState(null)
+  const[inner,setInner]=useState([]) 
+  // const[drop,setDrop] = useState(null)
 
-  const[inner,setInner]=useState([])
   async function fetchMenu() {
     const data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.18260&lng=78.02560&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`)
     const result = await data.json();
-    console.log(result?.data?.cards)  
+    // console.log(result?.data?.cards)  
     setMenu(result?.data?.cards[0]?.card?.card?.text)
     setMenuinfo(result?.data?.cards[2]?.card?.card?.info)
     setOffer(result?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers)
     let  sort = (result?.data?.cards)?.filter(data=>data?.groupedCard?.cardGroupMap) 
-    console.log(sort)
+    // console.log(sort)
     let actualData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
     let cakeData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
-    console.log(actualData)
+    // console.log(actualData)
     // console.log(cakeData)
     let combinedData = [...(actualData || []), ...(cakeData || [])];
-    console.log(combinedData)
-    setExtra(combinedData)?.filter((data)=> data?.card?.card?.titles)
+    // setExtra(actualData)?.filter((data)=> data?.card?.card?.titles)
+    setExtra(actualData);
+    console.log(actualData)
+    // console.log(extra)
+    setInner(actualData)
+    
     // let precice = (actualData)
     // console.log(precice)
-    setInner(actualData[0]?.card?.card)
-    console.log(combinedData?.card)
+    // setInner(combinedData)
+    // console.log(combinedData?.card)
 
 // console.log(combinedData)
     // console.log(combinedData)?.filter((data)=> data?.card?.card?.itemCards)
     // let more = (combinedData)
     // console.log(setExtra)  
-    // setInner(setExtra?.card?.card)
     // console.log(setInner)
     // console.log(sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.map(data=>data?.card?.card?.itemCards?.card?.info?.name)
   }
@@ -198,16 +201,21 @@ function RestaurantDetails() {
           </div>
           <hr/>
           <div className='gap-5 flex-col'>
+           {extra.map((item,i)=>(
+            <div key={i} className='flex justify-between'>
+                   <h1>{item?.card?.card?.title}</h1>
+                   {console.log(item)}
             {
-              extra.map(({card:{card:{itemCards,titles}}},i)=>(
+              item?.card?.card?.itemCards.map((item,i)=>(
                 <div key={i}>
-                  <div className='flex justify-between'>
-                    <p>{titles}</p>
-                  </div>
-
+                  <h1>{item.card.info?.name}</h1>
                 </div>
               ))
             }
+            </div>
+           ))
+           }
+          
           </div>
         </div>
       </div>
@@ -238,7 +246,7 @@ export default RestaurantDetails
   //           </div>
 
             {/* <div>
-            <img src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/${item?.card?.info?.imageId}`} alt="" className=" h-[41px] " />
+            <img src={https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/${item?.card?.info?.imageId}} alt="" className=" h-[41px] " />
               </div> */}
 
           {/* </div>
