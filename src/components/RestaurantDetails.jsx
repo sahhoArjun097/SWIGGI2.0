@@ -11,36 +11,38 @@ function RestaurantDetails() {
   const [backgColor, setBackgColor] = useState('bg-slate-200');
   const [info, setMenuinfo] = useState("");
   const [deals, setOffer] = useState([])
-  const[extra,setExtra] = useState([])
-  const[drop,setDrop] = useState(null)
+  const [extra, setExtra] = useState([])
+  const [inner, setInner] = useState([])
+  // const[drop,setDrop] = useState(null)
 
-  const[inner,setInner]=useState([])
   async function fetchMenu() {
     const data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.18260&lng=78.02560&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`)
     const result = await data.json();
-    console.log(result?.data?.cards)  
+    console.log(result?.data?.cards)
     setMenu(result?.data?.cards[0]?.card?.card?.text)
     setMenuinfo(result?.data?.cards[2]?.card?.card?.info)
     setOffer(result?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers)
-    let  sort = (result?.data?.cards)?.filter(data=>data?.groupedCard?.cardGroupMap) 
+    let sort = (result?.data?.cards)?.filter(data => data?.groupedCard?.cardGroupMap)
     console.log(sort)
     let actualData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
     let cakeData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
     console.log(actualData)
-    // console.log(cakeData)
-    let combinedData = [...(actualData || []), ...(cakeData || [])];
-    console.log(combinedData)
-    setExtra(combinedData)?.filter((data)=> data?.card?.card?.titles)
+    console.log(cakeData)
+    // let combinedData = [...(actualData || []), ...(cakeData || [])];
+    // console.log(combinedData)
+    setExtra(actualData)
+    setInner(actualData)
+
+
+
     // let precice = (actualData)
     // console.log(precice)
-    setInner(actualData[0]?.card?.card)
-    console.log(combinedData?.card)
+    // console.log(combinedData?.card)
 
-// console.log(combinedData)
+    // console.log(combinedData)
     // console.log(combinedData)?.filter((data)=> data?.card?.card?.itemCards)
     // let more = (combinedData)
     // console.log(setExtra)  
-    // setInner(setExtra?.card?.card)
     // console.log(setInner)
     // console.log(sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.map(data=>data?.card?.card?.itemCards?.card?.info?.name)
   }
@@ -101,7 +103,7 @@ function RestaurantDetails() {
               <p className='text-[14px]  font-bold '>Dineout</p>
             </div>
             <div className='w-[95px] bg-red-500 h-[3px] ml-5 mt-1 rounded-lg '></div>
-            <hr className='border-b-0'/>
+            <hr className='border-b-0' />
           </div>
           <div className=' w-full p-3 from-gray-300  rounded-3xl  bg-gradient-to-t from-1% to-transparent to-100%  '>
             <div className=' border  mt-2 h-36 w-[100%] bg-white p-3 rounded-2xl'>
@@ -194,20 +196,60 @@ function RestaurantDetails() {
               </div>
             </div>
           </div>
-          <div>   
+          <div>
           </div>
-          <hr/>
-          <div className='gap-5 flex-col'>
-            {
-              extra.map(({card:{card:{itemCards,titles}}},i)=>(
-                <div key={i}>
-                  <div className='flex justify-between'>
-                    <p>{titles}</p>
-                  </div>
+          <hr />
+          <div className=' flex-col'>
+            {extra.map((item, i) => (
+              <div key={i} className='flex-col'>
+                <div className='flex justify-between text-xl font-bold p-2'>
+                  <h1 className='text-xl '>{item?.card?.card?.title}</h1>
+                  <i className="fi fi-rr-angle-small-down text-2xl " ></i>
 
                 </div>
-              ))
+                {
+                  item?.card?.card?.itemCards.map((item, i) => (
+                    <div key={i} className='flex  p-4'>
+                      <div className=' flex-col'>
+                        <div>
+                          <p className='' style={{color:item.card.info?.itemAttribute?.vegClassifier === "VEG" ? "green":"red"  }}>{item.card.info?.itemAttribute?.vegClassifier}</p>
+                        </div>
+                        <div className='w-[60%]'>
+                          <p className='text-wrap'>{item.card.info?.name}</p>
+                        </div>
+                        <div className='flex gap-2'>
+                          <div >
+                            <p>{item?.card?.info?.price / 100}</p>
+                          </div>
+                          <div className='flex gap-[5px]'>
+                            <p className='text-xs font-bold mt-1'>{item?.card?.info?.offerTags?.[0]?.title}</p>
+                            <p className='text-xs font-bold mt-1'>{item?.card?.info?.offerTags?.[0]?.subTitle}</p>
+                          </div>
+                        </div>
+                        <div className='flex'>
+                          <p>{item?.card?.info?.ratings?.aggregatedRating?.rating}</p>
+                          <p>{item?.card?.info?.ratings?.aggregatedRating?.ratingCountV2 ? `(${item?.card?.info?.ratings?.aggregatedRating?.ratingCountV2})` : ' '}</p>
+                        </div>
+                        <div className='w-[70%]'>
+                          <p className=' line-clamp-2'>{item?.card?.info?.description}</p>
+                        </div>
+                        <hr />
+
+                      </div>
+                      <div>
+                        <div className='w-[150px] h-[150px]  rounded-xl'>
+                          <img src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/${item?.card?.info?.imageId}`} alt="" className=" w-full h-full  rounded-xl " />
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+
+
+              </div>
+            ))
             }
+
           </div>
         </div>
       </div>
@@ -218,37 +260,37 @@ function RestaurantDetails() {
 export default RestaurantDetails
 
 
-  //  {/* extra.map(({card:{card:{itemCards:{title}}}} ,i */}
-  //  {
-  //   extra.map((item ,i)=>(
-  //     <div key={i} className='pt-6'>
-  //        <div className='flex justify-between text-xl font-bold p-5'>
-  //       <h1>{item?.card?.card?.title}</h1>
-  //       {
-  //     // drop === i && 
-  //       inner.map((item,i)=>(
-  //         <div key={i} className='flex-col p-5'>
-  //           <div className=''>
-  //             <p>{item?.card?.info?.name}</p>
-  //           </div>
-  //           <div className=''>
-  //             <p>{item?.card?.info?.price/100}</p>
-  //             <p></p>
+//  {/* extra.map(({card:{card:{itemCards:{title}}}} ,i */}
+//  {
+//   extra.map((item ,i)=>(
+//     <div key={i} className='pt-6'>
+//        <div className='flex justify-between text-xl font-bold p-5'>
+//       <h1>{item?.card?.card?.title}</h1>
+//       {
+//     // drop === i && 
+//       inner.map((item,i)=>(
+//         <div key={i} className='flex-col p-5'>
+//           <div className=''>
+//             <p>{item?.card?.info?.name}</p>
+//           </div>
+//           <div className=''>
+//             <p>{item?.card?.info?.price/100}</p>
+//             <p></p>
 
-  //           </div>
+//           </div>
 
-            {/* <div>
+{/* <div>
             <img src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/${item?.card?.info?.imageId}`} alt="" className=" h-[41px] " />
               </div> */}
 
-          {/* </div>
+{/* </div>
          
         )) */}
-      // }/
-      {/* <div>
+// }/
+{/* <div>
         <i className="fi fi-rr-angle-small-up text-2xl" onClick={()=> moveup(i)}></i>
       </div> */}
-      {/* </div>
+{/* </div>
       
       <hr/>
       </div>
