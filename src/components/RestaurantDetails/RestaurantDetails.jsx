@@ -14,7 +14,7 @@ function RestaurantDetails() {
   const [info, setMenuinfo] = useState("");
   const [deals, setOffer] = useState([])
   const[extra,setExtra] = useState([])
-  const[clicked,setClicked]=useState([]) 
+  const[clicked,setClicked]=useState([false]) 
   // const[drop,setDrop] = useState(null) 
 
   async function fetchMenu() {
@@ -27,11 +27,6 @@ function RestaurantDetails() {
     let  sort = (result?.data?.cards)?.filter(data=>data?.groupedCard?.cardGroupMap) 
     // console.log(sort)
     let actualData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
-    let cakeData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
-    // console.log(actualData)
-    // console.log(cakeData)
-    let combinedData = [...(actualData || []), ...(cakeData || [])];
-    // setExtra(actualData)?.filter((data)=> data?.card?.card?.titles)
     setExtra(actualData);
     const size =  actualData.length;
     const initialClickedState = Array(size).fill(false)
@@ -215,9 +210,9 @@ function RestaurantDetails() {
           <hr/>
           <div className='flex flex-col gap-5 '>
            {extra.map((item,i)=>(
-            <div key={i} className='p-2 font-bold w-full cursor-pointer'>
-              <div onClick={() => extraDropdown(i)} className='flex justify-between'>
-                   <h1 c>{item?.card?.card?.title} ({item?.card?.card?.itemCards.length})</h1>
+            <div key={i} className='p-2 font-bold w-full'>
+              <div onClick={() => extraDropdown(i)} className='flex justify-between cursor-pointer'>
+                   <h1>{item?.card?.card?.title} ({item?.card?.card?.itemCards.length})</h1>
                    <span>{clicked[i]?'↓':'->'}</span>
               </div>
                    

@@ -24,30 +24,33 @@ const itemCard = (props) => {
               style={{ fontSize: "10px" }}
               className="pl-1 pt-[3px] opacity-[70%]"
             >
-              {info.offerTags[0].title}
+              {info.offerTags && info.offerTags[0].title}
             </div>
             <div
               style={{ fontSize: "10px" }}
               className="pl-1 pt-[3px] opacity-[70%]"
             >
-              {info.offerTags[0].subTitle}
+              {info.offerTags && info.offerTags[0].subTitle}
             </div>
           </div>
+          {info.ratings.aggregatedRating.rating &&
           <div className="flex">
             <div className="text-[12px] text-green-700">&#9733; </div>
             <div
               style={{ fontSize: "12px" }}
               className="opacity-80 text-green-800 pl-1"
             >
-              {info.ratings.aggregatedRating.rating}{" "}
+              {info.ratings.aggregatedRating.rating }
             </div>
           </div>
+          }
           <div className="text-sm font-normal opacity-85 w-[90%]">
-            <span className="w-[99%] line-clamp-2">{info.description}</span><span className="font-bold">more</span>
+            {info.description && <><span className="w-[99%] line-clamp-2">{info.description}</span><span className="font-bold">more</span></>}
           </div>
         </div>
-        <div className="bg-gray-300 w-[156px] h-[144px] flex justify-center items-center rounded-lg">
-          No image{console.log(info)}
+        <div className="w-[156px] h-[144px] flex justify-center items-center rounded-lg">
+      {console.log(info)}
+          <img src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/${info.imageId}`} alt="" className=" w-full object-contain"/>
         </div>
       </div>
       <div className="mt-4 mb-4">

@@ -56,7 +56,7 @@ function Head() {
 
 
 
-          <div className="w-3/5 h-14  items-center flex justify-evenly gap-5  ">
+          <div className="md:flex hidden w-3/5 h-14  items-center justify-evenly gap-5  ">
             {navItems.map((data, index) => (
               <div key={index} className="flex gap-2">
                 <div className="mt-0">
