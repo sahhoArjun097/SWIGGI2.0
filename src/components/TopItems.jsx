@@ -2,7 +2,7 @@
 // import React from 'react'
 
 
-import React, { useState, useEffect } from "react"
+import  { useState, useEffect } from "react"
 
 function TopItems() {
   const [data, setData] = useState([]);
@@ -64,7 +64,7 @@ function TopItems() {
 
         <div className="h-[35px] w-[100px] gap-2 flex ">
 
-          <div onClick={handlePrev} className={`${bgColor}  cursor-pointer rounded-[50%] w-[35px] items-center justify-center flex `}>
+          <div onClick={handlePrev} className={`${bgColor}    cursor-pointer rounded-[50%] w-[35px] bg  items-center justify-center flex `}>
             <i className={`fi fi-tr-arrow-small-right text-2xl mt-1  `}></i>
           </div>
           <div onClick={handleNext} className={` ${backgColor} rounded-[50%]   cursor-pointer  w-[35px] items-center justify-center flex `}>

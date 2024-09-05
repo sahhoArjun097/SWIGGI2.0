@@ -1,7 +1,7 @@
 
 // import React from 'react'
 
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 
 
 
@@ -57,7 +57,6 @@ function WhatInMind() {
 
     <div>
       <div className="flex justify-between h-[6vh]">
-
         <div>
           <h1 className="font-bold text-2xl">What's on your mind? </h1>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 function RestaurantDetails() {
@@ -230,75 +230,77 @@ function RestaurantDetails() {
           <div>
           </div>
 
-<div className='overflow-x-hidden'>
+          <div className='overflow-x-hidden'>
   {
     top.map((item, i) => (
-      <div key={i} className='flex-col gap-32 '>
-        <div className='flex justify-between p-1 '>
-        <div>
-          <p className='text-xl font-bold'>{item?.card?.card?.title}</p>
-        </div>
-        <div className='flex gap-3'>
-          <div 
-            onClick={handlePrev2} 
-            className={`${bgColor2} cursor-pointer rounded-[50%] w-[35px] items-center justify-center flex`}>
-            <i className="fi fi-tr-arrow-small-right text-2xl mt-1"></i>
+      <div key={i} className='flex flex-col gap-10'>
+        <div className='flex justify-between p-1'>
+          <div>
+            <p className='text-xl font-bold'>{item?.card?.card?.title}</p>
           </div>
-          <div 
-            onClick={handleNext2} 
-            className={`${backgColor2} rounded-[50%] cursor-pointer w-[35px] items-center justify-center flex`}>
-            <i className="fi fi-tr-arrow-small-left text-2xl mt-1"></i>
+          <div className='flex gap-3'>
+            <div 
+              onClick={handlePrev2} 
+              className={`${bgColor2} cursor-pointer rounded-full w-[35px] h-[35px] items-center justify-center flex`}>
+              <i className="fi fi-tr-arrow-small-right text-2xl"></i>
+            </div>
+            <div 
+              onClick={handleNext2} 
+              className={`${backgColor2} cursor-pointer rounded-full w-[35px] h-[35px] items-center justify-center flex`}>
+              <i className="fi fi-tr-arrow-small-left text-2xl"></i>
+            </div>
           </div>
-        </div>
         </div>
 
-        <div className='flex w-[100vw] h-[100%] gap-4 mt-7 '>
+        <div className='flex w-[100vw] h-[100%] gap-4 mt-7 overflow-hidden'>
           {
-            item?.card?.card?.carousel?.map((item, i) => (
-                <div key={i} className='flex  gap-6  duration-1000 '
-                  style={{ transform: `translateX(-${value2}%)` }}
-                >
-                  <div className='flex-col'>
-                  <div className='duration-1000  relative w-[300px] h-[310px]'>
+            item?.card?.card?.carousel?.map((carouselItem, j) => (
+              <div key={j} className='flex-none w-[300px] gap-6 duration-1000'
+                style={{ transform: `translateX(-${value2}%)` }}
+              >
+                <div className='relative flex flex-col'>
+                  <div className='relative w-[300px] h-[310px]'>
                     <img
-                      src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_310/${item?.dish?.info?.imageId}`}
+                      src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_310/${carouselItem?.dish?.info?.imageId}`}
                       alt=""
-                      className="rounded-xl object-contain "
+                      className="rounded-xl object-cover w-full h-full"
                     />
                   </div>
-                  <div className='w-full h-full  rounded-xl  flex-col  from-black from-4% to-transparent to-50%  bg-gradient-to-b from-10%  absolute top-0 '>
-                    <div className='w-full h-5 p-5' >
-                    <div className=' flex ' >
-                          <p
-                            className='text-xs font-semibold'
-                            style={{ color: item.dish.info?.itemAttribute?.vegClassifier === "VEG" ? "green" : "red" }}
-                          >
-                            {item.dish.info.itemAttribute?.vegClassifier}
-                          </p>
+                  <div className='absolute inset-0 bg-gradient-to-b from-black to-transparent rounded-xl flex flex-col justify-end p-5'>
+                    <div className='flex items-center'>
+                      <p
+                        className='text-xs font-semibold'
+                        style={{ color: carouselItem.dish.info?.itemAttribute?.vegClassifier === "VEG" ? "green" : "red" }}
+                      >
+                        {carouselItem.dish.info.itemAttribute?.vegClassifier}
+                      </p>
                     </div>
-                      <div className='flex-col text-wrap w-[100%] h-full '>
-                        <p className='font-semibold text-xl text-white w-[80%] '>{item?.dish?.info?.name}</p>
-                        <p className='font-semibold text-xs text-white line-clamp-2 '>{item?.dish?.info?.description}</p>
-                      </div>
-                    <div className=' flex w-[100%] bottom-0 left-0 '>
-                      <p className='font-semibold text-xs text-white line-clamp-2 '>{item?.dish?.info?.price/100}</p>
+                    <div className='flex flex-col  '>
+                      <p className='font-semibold text-xl text-white'>{carouselItem?.dish?.info?.name}</p>
+                      <p className='font-semibold text-xs text-white line-clamp-2'>{carouselItem?.dish?.info?.description}</p>
                     </div>
-                      </div>
-                  </div>
-                  </div>
-                 
-                </div>
-             
+                    <div className='flex justify-between items-center '>
+                      <p className='font-semibold text-xl text-white'>{carouselItem?.dish?.info?.price / 100}</p>
+                      <div className='flex flex-col items-center'>
+                        <button className='w-[120px] h-[35px] bg-white rounded-2xl border flex justify-center items-center'>
+                          <p className='text-green-600 font-bold text-[20px]'>ADD</p>
+                        </button>
 
+                        <p className='text-xs font-semibold text-gray-400 mt-1'>Customisable</p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))
           }
         </div>
-       
-       
       </div>
     ))
   }
 </div>
+
 <hr className='mt-5 '/>
        
 
@@ -367,6 +369,7 @@ function RestaurantDetails() {
                         <div className='text-wrap'>
 
                           <p className='line-clamp-2'>{item?.card?.info?.description}</p>
+                          {/* 9:17:45 */}
 
                         </div>
                       </div>
