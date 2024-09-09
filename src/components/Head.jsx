@@ -1,9 +1,11 @@
 import { useContext} from "react"
 import { Link, Outlet } from "react-router-dom"
+import { useState } from 'react'
 import { Visibility } from "../context/contextapi"
 
 function Head() {
 const{open,setOpen} = useContext(Visibility);
+const [cartData,setCartData]= useState([])
 
   function handleArrowClick(){
 
@@ -106,7 +108,14 @@ const{open,setOpen} = useContext(Visibility);
                     {data.image}
                   </p>
                 </div>
-                <p className="font-bold text-gray-600 cursor-pointer hover:text-orange-500  "> {data.name}</p>
+                <p className="font-bold text-gray-600 cursor-pointer hover:text-orange-500  "> {data.name}
+
+                </p>
+                {
+                  data.name==="Cart" && <p>{cartData.length}</p>
+                }
+              
+                
               </div>
             ))}
           </div>

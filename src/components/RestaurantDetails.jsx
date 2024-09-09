@@ -15,7 +15,7 @@ function RestaurantDetails() {
   const [info, setMenuinfo] = useState("");
   const [deals, setOffer] = useState([])
   const [extra, setExtra] = useState([])
-  const [top,setTop] = useState([])
+  const [top, setTop] = useState([])
   // const [inner, setInner] = useState([])
   // const[drop,setDrop] = useState(null)
 
@@ -102,6 +102,7 @@ function RestaurantDetails() {
       // setColor('text-gray-900');
     }
   }
+
   // function moveup(i) {
   //   if (i === drop) {
   //     setDrop(null); 
@@ -231,229 +232,226 @@ function RestaurantDetails() {
           </div>
 
           <div className='overflow-x-hidden'>
-  {
-    top.map((item, i) => (
-      <div key={i} className='flex flex-col gap-10'>
-        <div className='flex justify-between p-1'>
-          <div>
-            <p className='text-xl font-bold'>{item?.card?.card?.title}</p>
-          </div>
-          <div className='flex gap-3'>
-            <div 
-              onClick={handlePrev2} 
-              className={`${bgColor2} cursor-pointer rounded-full w-[35px] h-[35px] items-center justify-center flex`}>
-              <i className="fi fi-tr-arrow-small-right text-2xl"></i>
-            </div>
-            <div 
-              onClick={handleNext2} 
-              className={`${backgColor2} cursor-pointer rounded-full w-[35px] h-[35px] items-center justify-center flex`}>
-              <i className="fi fi-tr-arrow-small-left text-2xl"></i>
-            </div>
-          </div>
-        </div>
-
-        <div className='flex w-[100vw] h-[100%] gap-4 mt-7 overflow-hidden'>
-          {
-            item?.card?.card?.carousel?.map((carouselItem, j) => (
-              <div key={j} className='flex-none w-[300px] gap-6 duration-1000'
-                style={{ transform: `translateX(-${value2}%)` }}
-              >
-                <div className='relative flex flex-col'>
-                  <div className='relative w-[300px] h-[310px]'>
-                    <img
-                      src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_310/${carouselItem?.dish?.info?.imageId}`}
-                      alt=""
-                      className="rounded-xl object-cover w-full h-full"
-                    />
-                  </div>
-                  <div className='absolute inset-0 bg-gradient-to-b from-black to-transparent rounded-xl flex flex-col justify-end p-5'>
-                    <div className='flex items-center'>
-                      <p
-                        className='text-xs font-semibold'
-                        style={{ color: carouselItem.dish.info?.itemAttribute?.vegClassifier === "VEG" ? "green" : "red" }}
-                      >
-                        {carouselItem.dish.info.itemAttribute?.vegClassifier}
-                      </p>
+            {
+              top.map((item, i) => (
+                <div key={i} className='flex flex-col gap-10'>
+                  <div className='flex justify-between p-1'>
+                    <div>
+                      <p className='text-xl font-bold'>{item?.card?.card?.title}</p>
                     </div>
-                    <div className='flex flex-col  '>
-                      <p className='font-semibold text-xl text-white'>{carouselItem?.dish?.info?.name}</p>
-                      <p className='font-semibold text-xs text-white line-clamp-2'>{carouselItem?.dish?.info?.description}</p>
-                    </div>
-                    <div className='flex justify-between items-center '>
-                      <p className='font-semibold text-xl text-white'>{carouselItem?.dish?.info?.price / 100}</p>
-                      <div className='flex flex-col items-center'>
-                        <button className='w-[120px] h-[35px] bg-white rounded-2xl border flex justify-center items-center'>
-                          <p className='text-green-600 font-bold text-[20px]'>ADD</p>
-                        </button>
-
-                        <p className='text-xs font-semibold text-gray-400 mt-1'>Customisable</p>
-
+                    <div className='flex gap-3'>
+                      <div
+                        onClick={handlePrev2}
+                        className={`${bgColor2} cursor-pointer rounded-full w-[35px] h-[35px] items-center justify-center flex`}>
+                        <i className="fi fi-tr-arrow-small-right text-2xl"></i>
+                      </div>
+                      <div
+                        onClick={handleNext2}
+                        className={`${backgColor2} cursor-pointer rounded-full w-[35px] h-[35px] items-center justify-center flex`}>
+                        <i className="fi fi-tr-arrow-small-left text-2xl"></i>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    ))
-  }
-</div>
 
-<hr className='mt-5 '/>
-       
+                  <div className='flex w-[100vw] h-[100%] gap-4 mt-7 overflow-hidden'>
+                    {
+                      item?.card?.card?.carousel?.map((carouselItem, j) => (
+                        <div key={j} className='flex  w-[300px] gap-6 duration-1000'
+                          style={{ transform: `translateX(-${value2}%)` }}
+                        >
+                          <div className='relative flex flex-col'>
+                            <div className='relative w-[300px] h-[310px]'>
+                              <img
+                                src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_310/${carouselItem?.dish?.info?.imageId}`}
+                                alt=""
+                                className="rounded-xl object-cover w-full h-full"
+                              />
+                            </div>
+                            <div className='absolute  h-full  bg-gradient-to-b from-black to-transparent rounded-xl flex flex-col justify-between p-5'>
+                              <div className=''>
+                                <div className='flex items-center'>
+                                  <p
+                                    className='text-xs font-semibold'
+                                    style={{ color: carouselItem.dish.info?.itemAttribute?.vegClassifier === "VEG" ? "green" : "red" }}
+                                  >
+                                    {carouselItem.dish.info.itemAttribute?.vegClassifier}
+                                  </p>
+                                </div>
+                                <div className='flex flex-col  '>
+                                  <p className='font-semibold text-xl text-white'>{carouselItem?.dish?.info?.name}</p>
+                                  <p className='font-semibold text-xs text-white line-clamp-2'>{carouselItem?.dish?.info?.description}</p>
+                                </div>
 
+                              </div>
 
-          <div className='flex-col'>
-            {extra.map((item, i) => (
-              <div key={i} className='flex-col'>
-                <div className='flex justify-between text-xl font-bold'>
-                  <h1 className='text-xl'>
-                    {item?.card?.card?.title} ({item?.card?.card?.itemCards.length})
-                  </h1>
-                  <i className="fi fi-rr-angle-small-down text-2xl"></i>
-                </div>
+                              <div className='flex justify-between items-center '>
+                                <p className='font-semibold text-xl text-white'>{carouselItem?.dish?.info?.price / 100}</p>
+                                <div className='flex flex-col items-center'>
+                                  <button className='w-[120px] h-[35px] bg-white rounded-2xl border flex justify-center items-center'>
+                                    <p className='text-green-600 font-bold text-[20px]'>ADD</p>
+                                  </button>
 
-                {item?.card?.card?.itemCards.map((item, i) => (
-                  <div key={i} className='flex-col gap-5 w-full'>
-                    <div className='flex gap-5 h-[200px] justify-between'>
-                      <div className='mt-4 flex-col'>
-                        <div className=' flex'>
-                          <p
-                            className='text-xs font-semibold'
-                            style={{ color: item.card.info?.itemAttribute?.vegClassifier === "VEG" ? "green" : "red" }}
-                          >
-                            {item.card.info?.itemAttribute?.vegClassifier}
-                          </p>
+                                  <p className='text-xs font-semibold text-gray-400 mt-1'>Customisable</p>
 
-                        </div>
-
-                        <div className='w-full'>
-                          <p className='text-lg font-bold text-gray-700'>
-                            {item.card.info?.name}
-                          </p>
-                        </div>
-
-                        <div className='flex gap-2'>
-                          <div className='flex'>
-                            {(item?.card?.info?.defaultPrice || item?.card?.info?.price) ? (
-                              <>
-                                <i className="fi fi-bs-indian-rupee-sign text-xs mt-[6px] font-bold"></i>
-                                <p className='text-black text-4xs font-semibold'>
-                                  {(item?.card?.info?.defaultPrice || item?.card?.info?.price) / 100}
-                                </p>
-                              </>
-                            ) : null}
-                          </div>
-
-                          <div className='flex gap-[5px]'>
-                            <p className='text-xs font-bold mt-1'>{item?.card?.info?.offerTags?.[0]?.title}</p>
-                            <p className='text-xs font-bold mt-1'>{item?.card?.info?.offerTags?.[0]?.subTitle}</p>
-                          </div>
-                        </div>
-
-                        <div className='flex'>
-                          {item?.card?.info?.ratings?.aggregatedRating?.rating ? (
-                            <>
-                              <i className="fi fi-ss-star mt-[1px] text-green-800 font-semibold"></i>
-                              <p className='text-green-900 font-semibold'>{item?.card?.info?.ratings?.aggregatedRating?.rating}</p>
-                              <p>
-                                {item?.card?.info?.ratings?.aggregatedRating?.ratingCountV2 ?
-                                  `(${item?.card?.info?.ratings?.aggregatedRating?.ratingCountV2})` : ''}
-                              </p>
-                            </>
-                          ) : null}
-                        </div>
-
-                        <div className='text-wrap'>
-
-                          <p className='line-clamp-2'>{item?.card?.info?.description}</p>
-                          {/* 9:17:45 */}
-
-                        </div>
-                      </div>
-
-                      <div className=''>
-                        <div className='w-[180px] absolute h-[150px] rounded-xl mt-5'>
-                          <img
-                            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_180,h_150/${item?.card?.info?.imageId}`}
-                            alt=""
-                            className="w-full h-full rounded-xl"
-                          />
-                        </div>
-                        <div className='flex-col'>
-
-                        </div>
-                        <div className='relative w-[180px] h-[210px] flex justify-center items-end '>
-                          <div className='flex-col'>
-                            <button className=' w-[140px] h-[45px] bg-white rounded-2xl border flex justify-center  items-center'>
-                              < p className='text-green-600 font-bold text-[20px]'>ADD</p>
-                            </button>
-                            <div className='flex justify-center'>
-                              <p className='text-xs font-semibold text-gray-400'>  Customisable</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
-
                         </div>
-
-                      </div>
-                    </div>
-
-                    <hr className='mt-4 border-b-2 w-full text-black' />
+                      ))
+                    }
                   </div>
-                ))
-                }
-                {
+                </div>
+              ))
+            }
+          </div>
 
-                }
-              </div>
+          <hr className='mt-7 ' />
+
+
+
+          <div className='flex-col gap-5 flex mt-5'>
+            {extra.map(({ card: { card: { itemCards, title } } }, i) => (
+              <MenuData key={i} title={title} itemCards={itemCards} />
             ))}
+
           </div>
 
         </div>
       </div>
     </>
   )
+
 }
+
+
+function MenuData({ title, itemCards }) {
+  const [isOpen, setOpen] = useState(true)
+  function handleUpDown() {
+    setOpen((prev) => !prev)
+  }
+  // function handleAddCart() {
+  //   console.log(itemCards)
+  // }
+  return (
+    <div className='flex-col  flex gap-4'>
+
+      <div className='flex justify-between text-xl font-bold'>
+        <h1 className='text-xl'>
+          {title} ({itemCards.length})
+        </h1>
+        <i className="fi fi-rr-angle-small-down text-2xl" onClick={handleUpDown}></i>
+      </div>
+      {
+        isOpen &&
+        <DeatailMenu itemCards={itemCards} />
+      }
+
+    </div>
+  )
+
+}
+
+function DeatailMenu({ itemCards }) {
+  return (
+    <div>
+      {
+        itemCards.map(({ card: { info } }, i) => (
+          <div key={i} className='flex-col gap-5 w-full'>
+            <div className='flex gap-5 h-[200px] justify-between'>
+              <div className='mt-4 flex-col'>
+                <div className=' flex'>
+                  <p
+                    className='text-xs font-semibold'
+                    style={{ color: info?.itemAttribute?.vegClassifier === "VEG" ? "green" : "red" }}
+                  >
+                    {info?.itemAttribute?.vegClassifier}
+                  </p>
+
+                </div>
+
+                <div className='w-full'>
+                  <p className='text-lg font-bold text-gray-700'>
+                    {info?.name}
+                  </p>
+                </div>
+
+                <div className='flex gap-2'>
+                  <div className='flex'>
+                    {(info?.defaultPrice || info?.price) ? (
+                      <>
+                        <i className="fi fi-bs-indian-rupee-sign text-xs mt-[6px] font-bold"></i>
+                        <p className='text-black text-4xs font-semibold'>
+                          {(info?.defaultPrice || info?.price) / 100}
+                        </p>
+                      </>
+                    ) : null}
+                  </div>
+
+                  <div className='flex gap-[5px]'>
+                    <p className='text-xs font-bold mt-1'>{info?.offerTags?.[0]?.title}</p>
+                    <p className='text-xs font-bold mt-1'>{info?.offerTags?.[0]?.subTitle}</p>
+                  </div>
+                </div>
+
+                <div className='flex'>
+                  {info?.ratings?.aggregatedRating?.rating ? (
+                    <>
+                      <i className="fi fi-ss-star mt-[1px] text-green-800 font-semibold"></i>
+                      <p className='text-green-900 font-semibold'>{info?.ratings?.aggregatedRating?.rating}</p>
+                      <p>
+                        {info?.ratings?.aggregatedRating?.ratingCountV2 ?
+                          `(${info?.ratings?.aggregatedRating?.ratingCountV2})` : ''}
+                      </p>
+                    </>
+                  ) : null}
+                </div>
+
+                <div className='text-wrap'>
+
+                  <p className='line-clamp-2'>{info?.description}</p>
+
+
+                </div>
+              </div>
+
+              <div className=''>
+                <div className='w-[180px] absolute h-[150px] rounded-xl mt-5'>
+                  <img
+                    src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_180,h_150/${info?.imageId}`}
+                    alt=""
+                    className="w-full h-full rounded-xl"
+                  />
+                </div>
+                <div className='flex-col'>
+
+                </div>
+                <div className='relative w-[180px] h-[210px] flex justify-center items-end '>
+                  <div className='flex-col'>
+                    <button className=' w-[140px] h-[45px] bg-white rounded-2xl border flex justify-center  items-center'>
+                      < p className='text-green-600 font-bold text-[20px]' >ADD</p>
+                    </button>
+                    <div className='flex justify-center'>
+                      <p className='text-xs font-semibold text-gray-400'>  Customisable</p>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <hr className='mt-4 border-b-2 w-full text-black' />
+          </div>
+        ))
+      }
+
+    </div>
+  )
+
+}
+
 
 export default RestaurantDetails
 
 
-//  {/* extra.map(({card:{card:{itemCards:{title}}}} ,i */}
-//  {
-//   extra.map((item ,i)=>(
-//     <div key={i} className='pt-6'>
-//        <div className='flex justify-between text-xl font-bold p-5'>
-//       <h1>{item?.card?.card?.title}</h1>
-//       {
-//     // drop === i && 
-//       inner.map((item,i)=>(
-//         <div key={i} className='flex-col p-5'>
-//           <div className=''>
-//             <p>{item?.card?.info?.name}</p>
-//           </div>
-//           <div className=''>
-//             <p>{item?.card?.info?.price/100}</p>
-//             <p></p>
-
-//           </div>
-
-{/* <div>
-            <img src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/${item?.card?.info?.imageId}`} alt="" className=" h-[41px] " />
-              </div> */}
-
-{/* </div>
-         
-        )) */}
-// }/
-{/* <div>
-        <i className="fi fi-rr-angle-small-up text-2xl" onClick={()=> moveup(i)}></i>
-      </div> */}
-{/* </div>
-      
-      <hr/>
-      </div>
-
-    ))
-  } */}
