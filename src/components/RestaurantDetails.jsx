@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+/* eslint-disable react/prop-types */
+import { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-
+import { CartContext } from '../context/contextapi';
 function RestaurantDetails() {
   const { id } = useParams();
   // console.log(id);
-
   const [menu, setMenu] = useState("")
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
@@ -12,16 +12,16 @@ function RestaurantDetails() {
   const [bgColor2, setBgColor2] = useState('bg-slate-300');
   const [backgColor, setBackgColor] = useState('bg-slate-200');
   const [backgColor2, setBackgColor2] = useState('bg-slate-200');
-  const [info, setMenuinfo] = useState("");
+  const [info, setMenuinfo] = useState([]);
   const [deals, setOffer] = useState([])
   const [extra, setExtra] = useState([])
   const [top, setTop] = useState([])
   // const [inner, setInner] = useState([])
   // const[drop,setDrop] = useState(null)
-
   async function fetchMenu() {
-    const data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.18260&lng=78.02560&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`)
+    const data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.6616862&lng=77.2304635&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`)
     const result = await data.json();
+    console.log(result?.data)
     console.log(result?.data?.cards)
     setMenu(result?.data?.cards[0]?.card?.card?.text)
     setMenuinfo(result?.data?.cards[2]?.card?.card?.info)
@@ -34,17 +34,13 @@ function RestaurantDetails() {
     let cakeData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.categories)
     console.log(actualData)
     console.log(cakeData)
-    // let combinedData = [...(actualData || []), ...(cakeData || [])];
+    let combinedData = [...(actualData || []), ...(cakeData || [])];
     // console.log(combinedData)
-    setExtra(actualData)
+    setExtra(combinedData)
     // setInner(actualData)
-
-
-
     // let precice = (actualData)
     // console.log(precice)
     // console.log(combinedData?.card)
-
     // console.log(combinedData)
     // console.log(combinedData)?.filter((data)=> data?.card?.card?.itemCards)
     // let more = (combinedData)
@@ -102,7 +98,6 @@ function RestaurantDetails() {
       // setColor('text-gray-900');
     }
   }
-
   // function moveup(i) {
   //   if (i === drop) {
   //     setDrop(null); 
@@ -120,7 +115,7 @@ function RestaurantDetails() {
           <div className='flex-col '>
             <div className='h-10  gap-2  w-full flex'>
               <p className='text-xs text-gray-600 text-[7px]'>Home /</p>
-              <p className='text-xs text-gray-600 text-[7px]'>Agra /</p>
+              <p className='text-xs text-gray-600 text-[7px]'>{info?.city} /</p>
               <p className="  text-[7px] text-xs">{menu}</p>
             </div>
           </div>
@@ -210,7 +205,6 @@ function RestaurantDetails() {
                   ))
                 }
               </div>
-
             </div>
           </div>
           <div className='flex justify-center items-center'>
@@ -230,7 +224,6 @@ function RestaurantDetails() {
           </div>
           <div>
           </div>
-
           <div className='overflow-x-hidden'>
             {
               top.map((item, i) => (
@@ -292,7 +285,6 @@ function RestaurantDetails() {
                                   </button>
 
                                   <p className='text-xs font-semibold text-gray-400 mt-1'>Customisable</p>
-
                                 </div>
                               </div>
                             </div>
@@ -306,17 +298,13 @@ function RestaurantDetails() {
             }
           </div>
 
-          <hr className='mt-7 ' />
-
-
-
+          <hr className='mt-7  border-[10px] ' />
           <div className='flex-col gap-5 flex mt-5'>
-            {extra.map(({ card: { card: { itemCards, title } } }, i) => (
-              <MenuData key={i} title={title} itemCards={itemCards} />
+            {extra.map(({ card: { card } }, i) => (
+              // console.log(card)
+              <MenuData key={i} card={card} />
             ))}
-
           </div>
-
         </div>
       </div>
     </>
@@ -325,130 +313,151 @@ function RestaurantDetails() {
 }
 
 
-function MenuData({ title, itemCards }) {
-  const [isOpen, setOpen] = useState(true)
+function MenuData({ card }) {
+  const [isOpen, setOpen] = useState(true);
+  
   function handleUpDown() {
-    setOpen((prev) => !prev)
+    setOpen((prev) => !prev);
   }
-  // function handleAddCart() {
-  //   console.log(itemCards)
-  // }
-  return (
-    <div className='flex-col  flex gap-4'>
 
-      <div className='flex justify-between text-xl font-bold'>
-        <h1 className='text-xl'>
-          {title} ({itemCards.length})
-        </h1>
-        <i className="fi fi-rr-angle-small-down text-2xl" onClick={handleUpDown}></i>
+  if (card.itemCards) {
+    const { title, itemCards } = card;
+    return (
+      <>
+        <div className="flex-col flex gap-4">
+          <div className="flex justify-between text-xl font-bold">
+            <h1 className="text-xl">
+              {title} ({itemCards.length})
+            </h1>
+            <i
+              className={
+                "fi text-2xl fi-rr-angle-small-" + (isOpen ? "up" : "down")
+              }
+              onClick={handleUpDown}
+            ></i>
+          </div>
+          {isOpen && <DetailMenu itemCards={itemCards} />}
+        </div>
+        <hr className="my-5 border-[10px]" />
+      </>
+    );
+  } else {
+    const { title, categories } = card;
+    return (
+      <div>
+        <MenuData card={categories[0]} />
       </div>
-      {
-        isOpen &&
-        <DeatailMenu itemCards={itemCards} />
-      }
-
-    </div>
-  )
-
+    );
+  }
 }
 
-function DeatailMenu({ itemCards }) {
+function DetailMenu({ itemCards }) {
   return (
     <div>
-      {
-        itemCards.map(({ card: { info } }, i) => (
-          <div key={i} className='flex-col gap-5 w-full'>
-            <div className='flex gap-5 h-[200px] justify-between'>
-              <div className='mt-4 flex-col'>
-                <div className=' flex'>
-                  <p
-                    className='text-xs font-semibold'
-                    style={{ color: info?.itemAttribute?.vegClassifier === "VEG" ? "green" : "red" }}
-                  >
-                    {info?.itemAttribute?.vegClassifier}
+      {itemCards.map(({ card: { info } }, i) => (
+        <DetailMenuCard info={info} key={i} />
+      ))}
+    </div>
+  );
+}
+
+function DetailMenuCard({ info }) {
+  const {
+    name,
+    description,
+    defaultPrice,
+    price,
+    imageId,
+    offerTags,
+    itemAttribute: { vegClassifier },
+    ratings: { aggregatedRating: { rating, ratingCountV2 } = {} } = {}
+  } = info;
+const{cartData,setCartData} = useContext(CartContext)
+  function handleAddCart() {
+    const isAdded = cartData.find((data)=> data.id === info.id)
+    setCartData((prev)=> [...prev,info])
+    // console.log(info);
+  }
+
+  return (
+    <div className="flex-col gap-5 w-full">
+      <div className="flex gap-5 h-[200px] justify-between">
+        <div className="mt-4 flex-col">
+          <div className="flex">
+            <p
+              className="text-xs font-semibold"
+              style={{ color: vegClassifier === "VEG" ? "green" : "red" }}
+            >
+              {vegClassifier}
+            </p>
+          </div>
+
+          <div className="w-full">
+            <p className="text-lg font-bold text-gray-700">{name}</p>
+          </div>
+
+          <div className="flex gap-2">
+            <div className="flex">
+              {(defaultPrice || price) ? (
+                <>
+                  <i className="fi fi-bs-indian-rupee-sign text-xs mt-[6px] font-bold"></i>
+                  <p className="text-black text-4xs font-semibold">
+                    {(defaultPrice || price) / 100}
                   </p>
-
-                </div>
-
-                <div className='w-full'>
-                  <p className='text-lg font-bold text-gray-700'>
-                    {info?.name}
-                  </p>
-                </div>
-
-                <div className='flex gap-2'>
-                  <div className='flex'>
-                    {(info?.defaultPrice || info?.price) ? (
-                      <>
-                        <i className="fi fi-bs-indian-rupee-sign text-xs mt-[6px] font-bold"></i>
-                        <p className='text-black text-4xs font-semibold'>
-                          {(info?.defaultPrice || info?.price) / 100}
-                        </p>
-                      </>
-                    ) : null}
-                  </div>
-
-                  <div className='flex gap-[5px]'>
-                    <p className='text-xs font-bold mt-1'>{info?.offerTags?.[0]?.title}</p>
-                    <p className='text-xs font-bold mt-1'>{info?.offerTags?.[0]?.subTitle}</p>
-                  </div>
-                </div>
-
-                <div className='flex'>
-                  {info?.ratings?.aggregatedRating?.rating ? (
-                    <>
-                      <i className="fi fi-ss-star mt-[1px] text-green-800 font-semibold"></i>
-                      <p className='text-green-900 font-semibold'>{info?.ratings?.aggregatedRating?.rating}</p>
-                      <p>
-                        {info?.ratings?.aggregatedRating?.ratingCountV2 ?
-                          `(${info?.ratings?.aggregatedRating?.ratingCountV2})` : ''}
-                      </p>
-                    </>
-                  ) : null}
-                </div>
-
-                <div className='text-wrap'>
-
-                  <p className='line-clamp-2'>{info?.description}</p>
-
-
-                </div>
-              </div>
-
-              <div className=''>
-                <div className='w-[180px] absolute h-[150px] rounded-xl mt-5'>
-                  <img
-                    src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_180,h_150/${info?.imageId}`}
-                    alt=""
-                    className="w-full h-full rounded-xl"
-                  />
-                </div>
-                <div className='flex-col'>
-
-                </div>
-                <div className='relative w-[180px] h-[210px] flex justify-center items-end '>
-                  <div className='flex-col'>
-                    <button className=' w-[140px] h-[45px] bg-white rounded-2xl border flex justify-center  items-center'>
-                      < p className='text-green-600 font-bold text-[20px]' >ADD</p>
-                    </button>
-                    <div className='flex justify-center'>
-                      <p className='text-xs font-semibold text-gray-400'>  Customisable</p>
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
+                </>
+              ) : null}
             </div>
 
-            <hr className='mt-4 border-b-2 w-full text-black' />
+            <div className="flex gap-[5px]">
+              <p className="text-xs font-bold mt-1">{offerTags?.[0]?.title}</p>
+              <p className="text-xs font-bold mt-1">{offerTags?.[0]?.subTitle}</p>
+            </div>
           </div>
-        ))
-      }
 
+          <div className="flex">
+            {rating ? (
+              <>
+                <i className="fi fi-ss-star mt-[1px] text-green-800 font-semibold"></i>
+                <p className="text-green-900 font-semibold">{rating}</p>
+                <p>{ratingCountV2 ? `(${ratingCountV2})` : ''}</p>
+              </>
+            ) : null}
+          </div>
+
+          <div className="text-wrap">
+            <p className="line-clamp-2">{description}</p>
+          </div>
+        </div>
+
+        <div className='flex justify-center'>
+          <div className="w-[180px] absolute h-[150px] rounded-xl mt-5 ">
+
+            <img
+              src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_180,h_150/${imageId}`}
+              alt={ " "}
+              className="w-full h-full  border rounded-xl contrast-110 brightness-100 saturate-125"
+            />
+          </div>
+
+          <div className="relative w-[180px] h-[210px] flex justify-center items-end ">
+            <div className="flex-col ">
+              <button
+                onClick={handleAddCart}
+                className="w-[140px] h-[40px] bg-white rounded-2xl border flex justify-center items-center"
+              >
+                <p className="text-green-600 font-bold text-[20px]">ADD</p>
+              </button>
+              <div className="flex justify-center">
+                <p className="text-xs font-semibold text-gray-400">Customisable</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr className="mt-4 border-b-2 w-full text-black" />
     </div>
-  )
-
+  );
 }
 
 

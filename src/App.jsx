@@ -5,24 +5,31 @@ import Head from './components/Head'
 import Home from './components/Home'
 import { Route, Routes } from 'react-router-dom';
 import RestaurantDetails from './components/RestaurantDetails';
-import { CardContext, Visibility } from "./context/contextapi";
+import { CartContext, Visibility } from "./context/contextapi";
+import Cart from './components/Cart';
 // import TopItems from './components/TopItems'
 export const App = () => {
   const [open, setOpen] = useState(false);
-  const [cartData,setCartData]= useState([{}])
+  const [cartData,setCartData] = useState([])
+
   return (
-    <CardContext.Provider value={{cartData,setCartData}}>
+    
+    <CartContext.Provider value={ {cartData,setCartData}}>
     <Visibility.Provider value={{ open, setOpen }}>
       <div className={open ? " min-h-full" : " "}>
         <Routes>
           <Route path="/" element={<Head />}>
             <Route path='/' element={<Home />}></Route>
-            <Route path='/restaurant/:id' element={<RestaurantDetails />} />
+            <Route path='/restaurant/:id' element={<RestaurantDetails />}/>
+            <Route path='/Cart' element={<Cart/>}/>
+            <Route path='*' element={<h1>comming soon</h1>}/>
           </Route>
+
         </Routes>
       </div>
     </Visibility.Provider>
-    </CardContext.Provider>
+    </CartContext.Provider>
+
 
   )
 }

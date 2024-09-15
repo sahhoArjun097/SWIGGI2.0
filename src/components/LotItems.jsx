@@ -5,7 +5,7 @@ function LotItems() {
   const [data, setData] = useState([]);
 
   async function fetchData() {
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.18260&lng=78.02560&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
     const result = await data.json();
     console.log(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     setData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
