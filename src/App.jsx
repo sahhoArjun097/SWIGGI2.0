@@ -1,6 +1,6 @@
 import '@flaticon/flaticon-uicons/css/all/all.css';
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Head from './components/Head'
 import Home from './components/Home'
 import { Route, Routes } from 'react-router-dom';
@@ -11,6 +11,16 @@ import Cart from './components/Cart';
 export const App = () => {
   const [open, setOpen] = useState(false);
   const [cartData,setCartData] = useState([])
+
+
+  function getDataFormLocalStorage(){
+    let data = JSON.parse(localStorage.getItem("cardData")) || []
+    setCartData(data)
+  }
+  useEffect(()=>{
+    getDataFormLocalStorage()
+  },[])
+
 
   return (
     

@@ -3,10 +3,14 @@ import { CartContext } from "../context/contextapi"
 
 function Cart() {
 
-    // function handleRemoveCart() {
-    //     if ( )
+    function handleRemoveCart(i) {
+        let newArr = [...cartData]
+        newArr.splice(i,1)
+        setCartData(newArr)
+        localStorage.setItem("....cartData",JSON.stringify(newArr))
 
-    // }
+
+    }
     const { cartData, setCartData } = useContext(CartContext);
     console.log(cartData)
     if (cartData.length == 0) {
@@ -39,7 +43,7 @@ function Cart() {
                                     <div className="relative w-[180px] h-[210px] flex justify-center items-end ">
                                         <div className="flex-col ">
                                             <button
-                                                // onClick={handleRemoveCart}
+                                                onClick={()=>handleRemoveCart(i)}
 
                                                 className="w-[140px] h-[40px] bg-white rounded-2xl border flex justify-center items-center"
                                             >

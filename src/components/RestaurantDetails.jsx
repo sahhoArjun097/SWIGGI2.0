@@ -107,6 +107,7 @@ function RestaurantDetails() {
   // }
   useEffect(() => {
     fetchMenu()
+    
   }, []);
   return (
     <>
@@ -373,9 +374,16 @@ function DetailMenuCard({ info }) {
     ratings: { aggregatedRating: { rating, ratingCountV2 } = {} } = {}
   } = info;
 const{cartData,setCartData} = useContext(CartContext)
+
   function handleAddCart() {
     const isAdded = cartData.find((data)=> data.id === info.id)
-    setCartData((prev)=> [...prev,info])
+    if(!isAdded){
+      setCartData((prev)=> [...prev,info])
+      localStorage.setItem("cartData",JSON.stringify([...cartData, info]))
+    } else{
+      alert("this is already added")
+      
+    }
     // console.log(info);
   }
 
