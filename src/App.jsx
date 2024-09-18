@@ -1,5 +1,4 @@
 import '@flaticon/flaticon-uicons/css/all/all.css';
-
 import { useEffect, useState } from "react"
 import Head from './components/Head'
 import Home from './components/Home'

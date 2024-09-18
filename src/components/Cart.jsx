@@ -7,7 +7,7 @@ function Cart() {
         let newArr = [...cartData]
         newArr.splice(i,1)
         setCartData(newArr)
-        localStorage.setItem("....cartData",JSON.stringify(newArr))
+        localStorage.setItem("...cartData",JSON.stringify(newArr))
 
 
     }

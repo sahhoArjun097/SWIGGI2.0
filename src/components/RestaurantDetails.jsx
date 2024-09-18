@@ -107,7 +107,7 @@ function RestaurantDetails() {
   // }
   useEffect(() => {
     fetchMenu()
-    
+
   }, []);
   return (
     <>
@@ -379,7 +379,7 @@ const{cartData,setCartData} = useContext(CartContext)
     const isAdded = cartData.find((data)=> data.id === info.id)
     if(!isAdded){
       setCartData((prev)=> [...prev,info])
-      localStorage.setItem("cartData",JSON.stringify([...cartData, info]))
+      localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
     } else{
       alert("this is already added")
       
