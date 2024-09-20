@@ -5,20 +5,27 @@ function Cart() {
 
     function handleRemoveCart(i) {
         let newArr = [...cartData]
-        newArr.splice(i,1)
+        newArr.splice(i, 1)
         setCartData(newArr)
-        localStorage.setItem("...cartData",JSON.stringify(newArr))
-
-
+        localStorage.setItem("cartData", JSON.stringify(newArr))
     }
     const { cartData, setCartData } = useContext(CartContext);
     console.log(cartData)
+    let totalprice = 0;
+    for (let i = 0; i < cartData.length; i++) {
+        totalprice = totalprice + cartData[i].price / 100 || cartData[i].defaultPrice / 100
+    }
     if (cartData.length == 0) {
         return (
             <div className="w-full h-[80vh] justify-center items-center flex ">
                 <h1 className="text-3xl">KUCH ORDER KR LO.....</h1>
             </div>
         )
+    }
+    function handleClearCart(){
+        setCartData([])
+        // localStorage.setItem("cartData", JSON.stringify([]))
+        localStorage.clear()
     }
     return (
         <div className="w-full h-[90vh] justify-center flex items-center p-5">
@@ -30,6 +37,7 @@ function Cart() {
                             <div className="  h-full w-full flex justify-between ">
 
                                 <h1 className="text-xl">{data.name}</h1>
+                                <p>{data.defaultPrice / 100 || data.price / 100}</p>
                                 <div className='flex justify-center'>
                                     <div className="w-[180px] absolute h-[150px] rounded-xl mt-5 ">
 
@@ -43,11 +51,11 @@ function Cart() {
                                     <div className="relative w-[180px] h-[210px] flex justify-center items-end ">
                                         <div className="flex-col ">
                                             <button
-                                                onClick={()=>handleRemoveCart(i)}
+                                                onClick={() => handleRemoveCart(i)}
 
-                                                className="w-[140px] h-[40px] bg-white rounded-2xl border flex justify-center items-center"
+                                                className="w-[140px] h-[40px] bg-white rounded-2xl bg-red-600 border flex justify-center items-center"
                                             >
-                                                <p className="text-red-600 font-bold text-[20px]">REMOVE</p>
+                                                <p className="text-white font-bold text-[20px]">REMOVE</p>
                                             </button>
                                             <div className="flex justify-center">
                                                 <p className="text-xs font-semibold text-gray-400">Customisable</p>
@@ -60,7 +68,10 @@ function Cart() {
                         </div>
                     ))
                 }
-
+                <h1>total-{totalprice}</h1>
+                <button onClick={handleClearCart} className="bg-green-800 h-10 w-20">
+                    clearcart
+                </button>
 
             </div>
         </div>

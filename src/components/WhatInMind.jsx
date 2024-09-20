@@ -72,13 +72,13 @@ function WhatInMind() {
       </div>
       <div
         style={{ transform: `translateX(-${value}%)` }}
-        className={`flex w-full justify-evenly gap-6 mt-5 duration-1000 `}
+        className={`flex w-full justify-evenly gap-6 mt-5  duration-1000 `}
       >
         {data.map((item) => (
-          <div key={item.id}>
+          <div key={item.id} className="">
             <img
               key={item.id}
-              className=""  
+              className="w-full"  
               src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}
               alt=""
             />

@@ -78,11 +78,11 @@ function TopItems() {
            
           <div
             style={{ transform: `translateX(-${value}%)` }}
-            className={` flex   duration-1000 gap-5 w-full h-full mt-7`}>
+            className={` flex duration-1000 gap-5 w-full h-full mt-7`}>
             {
               data.map((item, i) => (
                 <div key={i} className=" h-[183px] min-w-[273px] flex-col ">
-                  <img className="   w-full h-full object-cover  rounded-2xl" src={`https://media-assets.swiggy.com/swiggy/image/upload/${item?.info?.cloudinaryImageId}`} alt="ghj" />
+                  <img className=" w-full h-full object-cover rounded-2xl" src={`https://media-assets.swiggy.com/swiggy/image/upload/${item?.info?.cloudinaryImageId}`} alt="ghj" />
                   {/* absolute h-[183px] w-[273px   top-0   bg-gradient-to-t from-black from-1% to-transparent to-50% rounded-2xl */}
                   <div className="absolute h-[183px] min-w-[273px]  from-black  top-0 bg-gradient-to-t from-1% to-transparent to-50% rounded-2xl"></div>
                   <div className="absolute top-0 pt-[145px] p-2 flex flex-col gap-1 w-full">

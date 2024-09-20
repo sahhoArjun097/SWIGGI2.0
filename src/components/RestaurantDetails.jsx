@@ -27,7 +27,7 @@ function RestaurantDetails() {
     setMenuinfo(result?.data?.cards[2]?.card?.card?.info)
     setOffer(result?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers)
     let sort = (result?.data?.cards)?.filter(data => data?.groupedCard?.cardGroupMap)
-    console.log(sort)
+    console.log(sort) 
     let suggestion = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.carousel)
     setTop(suggestion)
     let actualData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
