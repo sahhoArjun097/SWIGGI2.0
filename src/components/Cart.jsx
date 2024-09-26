@@ -3,13 +3,14 @@ import { CartContext } from "../context/contextapi"
 
 function Cart() {
 
+    const { cartData, setCartData } = useContext(CartContext);
     function handleRemoveCart(i) {
         let newArr = [...cartData]
         newArr.splice(i, 1)
         setCartData(newArr)
-        localStorage.setItem("cartData", JSON.stringify(newArr))
+        console.log(newArr)
+        localStorage.setItem("...cartData",JSON.stringify(newArr))
     }
-    const { cartData, setCartData } = useContext(CartContext);
     console.log(cartData)
     let totalprice = 0;
     for (let i = 0; i < cartData.length; i++) {
@@ -53,7 +54,7 @@ function Cart() {
                                             <button
                                                 onClick={() => handleRemoveCart(i)}
 
-                                                className="w-[140px] h-[40px] bg-white rounded-2xl bg-red-600 border flex justify-center items-center"
+                                                className="w-[140px] h-[40px]  rounded-2xl bg-red-600 border flex justify-center items-center"
                                             >
                                                 <p className="text-white font-bold text-[20px]">REMOVE</p>
                                             </button>

@@ -13,8 +13,9 @@ export const App = () => {
 
 
   function getDataFormLocalStorage(){
-    let data = JSON.parse(localStorage.getItem("cardData")) || [];
+    let data = JSON.parse(localStorage.getItem("cartData")) || [];
     setCartData(data);
+    console.log(data)
   }
   useEffect(()=>{
     getDataFormLocalStorage()

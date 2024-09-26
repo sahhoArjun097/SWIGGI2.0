@@ -23,7 +23,7 @@ function RestaurantDetails() {
     const result = await data.json();
     console.log(result?.data)
     console.log(result?.data?.cards)
-    setMenu(result?.data?.cards[0]?.card?.card?.text)
+    setMenu(result?.data?.cards[0]?.card?.card)
     setMenuinfo(result?.data?.cards[2]?.card?.card?.info)
     setOffer(result?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers)
     let sort = (result?.data?.cards)?.filter(data => data?.groupedCard?.cardGroupMap)
@@ -117,12 +117,12 @@ function RestaurantDetails() {
             <div className='h-10  gap-2  w-full flex'>
               <p className='text-xs text-gray-600 text-[7px]'>Home /</p>
               <p className='text-xs text-gray-600 text-[7px]'>{info?.city} /</p>
-              <p className="  text-[7px] text-xs">{menu}</p>
+              <p className="  text-[7px] text-xs">{menu?.text}</p>
             </div>
           </div>
           <div className='w-full '>
             <div className='w-full h-full p-3  '>
-              <p className='font-bold text-xl'>{menu}</p>
+              <p className='font-bold text-xl'>{menu?.text}</p>
             </div>
           </div>
           <div className='w-full h-6'>
@@ -303,7 +303,7 @@ function RestaurantDetails() {
           <div className='flex-col gap-5 flex mt-5'>
             {extra.map(({ card: { card } }, i) => (
               // console.log(card)
-              <MenuData key={i} card={card} />
+              <MenuData key={i} card={card} menu={menu} />
             ))}
           </div>
         </div>
@@ -314,7 +314,7 @@ function RestaurantDetails() {
 }
 
 
-function MenuData({ card }) {
+function MenuData({ card ,menu}) {
   const [isOpen, setOpen] = useState(true);
   
   function handleUpDown() {
@@ -337,7 +337,7 @@ function MenuData({ card }) {
               onClick={handleUpDown}
             ></i>
           </div>
-          {isOpen && <DetailMenu itemCards={itemCards} />}
+          {isOpen && <DetailMenu itemCards={itemCards}  menu={menu} />}
         </div>
         <hr className="my-5 border-[10px]" />
       </>
@@ -346,23 +346,23 @@ function MenuData({ card }) {
     const { title, categories } = card;
     return (
       <div>
-        <MenuData card={categories[0]} />
+        <MenuData card={categories[0]} menu={menu} />
       </div>
     );
   }
 }
 
-function DetailMenu({ itemCards }) {
+function DetailMenu({ itemCards , menu}) {
   return (
     <div>
       {itemCards.map(({ card: { info } }, i) => (
-        <DetailMenuCard info={info} key={i} />
+        <DetailMenuCard info={info} key={i} menu={menu} />
       ))}
     </div>
   );
 }
 
-function DetailMenuCard({ info }) {
+function DetailMenuCard({ info,menu }) {
   const {
     name,
     description,
@@ -376,6 +376,7 @@ function DetailMenuCard({ info }) {
 const{cartData,setCartData} = useContext(CartContext)
 
   function handleAddCart() {
+    console.log(menu)
     const isAdded = cartData.find((data)=> data.id === info.id)
     if(!isAdded){
       setCartData((prev)=> [...prev,info])
