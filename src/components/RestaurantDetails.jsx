@@ -91,20 +91,14 @@ function RestaurantDetails() {
     }
     if (value2 > 0) {
       setBackgColor2('bg-slate-300');
-      // setColor('text-gray-400')
+      // setColtext-gror('ay-400')
     } else {
       setBackgColor2('bg-slate-200');
       setBgColor2('bg-slate-300');
-      // setColor('text-gray-900');
+      
     }
   }
-  // function moveup(i) {
-  //   if (i === drop) {
-  //     setDrop(null); 
-  //   } else {
-  //     setDrop(i);
-  //   }
-  // }
+
   useEffect(() => {
     fetchMenu()
 
@@ -261,7 +255,7 @@ function RestaurantDetails() {
                                 className="rounded-xl object-cover w-full h-full"
                               />
                             </div>
-                            <div className='absolute  h-full  bg-gradient-to-b from-black to-transparent rounded-xl flex flex-col justify-between p-5'>
+                            <div className='absolute  h-full w-full  bg-gradient-to-b from-black to-transparent rounded-xl flex flex-col justify-between p-5'>
                               <div className=''>
                                 <div className='flex items-center'>
                                   <p
@@ -381,6 +375,7 @@ const{cartData,setCartData} = useContext(CartContext)
     if(!isAdded){
       setCartData((prev)=> [...prev,info])
       localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
+      alert("item added to cart")
     } else{
       alert("this is already added")
       

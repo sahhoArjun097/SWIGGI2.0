@@ -14,7 +14,7 @@ export const App = () => {
 
   function getDataFormLocalStorage(){
     let data = JSON.parse(localStorage.getItem("cartData")) || [];
-    setCartData(data);
+    setCartData(data); 
     console.log(data)
   }
   useEffect(()=>{

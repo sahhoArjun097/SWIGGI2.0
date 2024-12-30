@@ -14,21 +14,23 @@ function WhatInMind() {
       const result = await response.json();
       console.log(result);
       setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info || []); 
+      console.log(result?.data?.cards[0]?.card?.card?.imageGridCards?.info )
     } catch (error) {
       console.error("Error fetching data:", error);
       setData([]); 
     }
   }
+  
 
   useEffect(() => {
     fetchData();
   }, []);
 
   function handlePrev() {
-    if (value < 165) {
+    if (value < 180) {
       setValue((prev) => prev + 34);
     }
-    if (value < 145) {
+    if (value < 5) {
       setBgColor("bg-slate-300");
     } else {
       setBgColor("bg-slate-200");
@@ -52,7 +54,7 @@ function WhatInMind() {
     <div>
       <div className="flex justify-between h-[6vh]">
         <div>
-          <h1 className="font-bold text-2xl">What's on your mind?</h1>
+          <h1 className="font-bold text-2xl"> What on your mind?</h1>
         </div>
         <div className="h-[35px] w-[100px] gap-2 flex ">
           <div
@@ -70,24 +72,26 @@ function WhatInMind() {
           </div>
         </div>
       </div>
-      <div
-        style={{ transform: `translateX(-${value}%)` }}
-        className={`flex w-full justify-evenly gap-6 mt-5  duration-1000 `}
-      >
-        {data.map((item) => (
-          <div key={item.id} className="">
-            <img
-              key={item.id}
-              className="w-full"  
-              src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}
-              alt=""
-            />
-          </div>
-        ))}
-      </div>
+    
+        <div
+                style={{ transform: `translateX(-${value}%)` }}
+                className={`flex mt-4  duration-1000 `}
+            >
+                {data.map((item) => (
+                    <img
+                    key={item.id}
+                        className="w-40 "
+                        src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}
+                        alt=""
+                    />
+                ))}
+            </div>
+
+
 
       <hr className="border-b-0 mt-8 p-1" />
     </div>
   );
+  
 }
 export default WhatInMind;
