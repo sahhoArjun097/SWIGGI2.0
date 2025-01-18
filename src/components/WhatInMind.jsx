@@ -14,7 +14,8 @@ function WhatInMind() {
       const result = await response.json();
       console.log(result);
       setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info || []); 
-      console.log(result?.data?.cards[0]?.card?.card?.imageGridCards?.info )
+      console.log(result?.data?.cards[0]?.card?.card?.imageGridCards?.info );
+      console.log(result?.data?.cards[0]?.card?.card?.imageGridCards?.info.length);
     } catch (error) {
       console.error("Error fetching data:", error);
       setData([]); 

@@ -122,7 +122,7 @@ function Head() {
 
                   </p>
                   {
-                    data.name === "Cart" && <p className="text-black">{cartData.length}</p>
+                    data.name === "Cart" && cartData.length > 0 && <p className="text-black">{cartData.length}</p>
                   }
 
 
