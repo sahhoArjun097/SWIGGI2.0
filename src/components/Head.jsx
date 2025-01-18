@@ -96,7 +96,7 @@ function Head() {
           <div className="w-1/4  h-14 items-center flex justify-center  gap-4">
             <div className="items-center flex justify-center  gap-7">
               <Link to="/">
-                <img src="/images/swiggi.png" alt="" className="h-11" />
+                <img src="/image.png" alt="" className="h-11" />
               </Link>
 
               <p className="text-2xs text-cyan-800 border-b-2 font-bold border-b-neutral-800">Other</p>
