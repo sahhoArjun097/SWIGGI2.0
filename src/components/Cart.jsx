@@ -1,83 +1,92 @@
-import { useContext } from "react"
-import { CartContext } from "../context/contextapi"
+import { useContext } from "react";
+import { CartContext } from "../context/contextapi";
 
 function Cart() {
+  const { cartData, setCartData } = useContext(CartContext);
 
-    const { cartData, setCartData } = useContext(CartContext);
-    function handleRemoveCart(i) {
-        let newArr = [...cartData]
-        newArr.splice(i, 1)
-        setCartData(newArr)
-        console.log(newArr)
-        localStorage.setItem("...cartData",JSON.stringify(newArr))
-    }
-    console.log(cartData)
-    let totalprice = 0;
-    for (let i = 0; i < cartData.length; i++) {
-        totalprice = totalprice + cartData[i].price / 100 || cartData[i].defaultPrice / 100
-    }
-    if (cartData.length == 0) {
-        return (
-            <div className="w-full h-[80vh] justify-center items-center flex ">
-                <h1 className="text-3xl">KUCH ORDER KR LO.....</h1>
-            </div>
-        )
-    }
-    function handleClearCart(){
-        setCartData([])
-        // localStorage.setItem("cartData", JSON.stringify([]))
-        localStorage.clear()
-    }
+  // Handle removing a specific item from the cart
+  function handleRemoveCart(i) {
+    const newArr = [...cartData];
+    newArr.splice(i, 1);
+    setCartData(newArr);
+    localStorage.setItem("cartData", JSON.stringify(newArr));
+  }
+
+  // Clear the entire cart
+  function handleClearCart() {
+    setCartData([]);
+    localStorage.removeItem("cartData");
+  }
+
+  // Calculate total price
+//   const totalPrice = cartData.reduce(
+//     (sum, item) => sum + (item.price || item.defaultPrice || 0) / 100,
+//     0
+//   );
+
+  let totalPrice = 0.00;
+  for (let i = 0; i < cartData.length; i++) {
+      totalPrice += cartData[i].price / 100 || cartData[i].defaultPrice / 100;
+  }
+  // Render when the cart is empty
+  if (cartData.length === 0) {
     return (
-        <div className="w-full h-[90vh] justify-center flex items-center p-5">
-            <div className="w-[50%] h-[100%] gap-5 flex flex-col    ">
+      <div className="w-full h-[80vh] flex justify-center items-center">
+        <h1 className="text-3xl font-bold text-gray-700">KUCH ORDER KR LO...</h1>
+      </div>
+    );
+  }
 
-                {
-                    cartData.map((data, i) => (
-                        <div key={i} className="w-full h-full  flex flex-col p-5    gap-5  justify-between ">
-                            <div className="  h-full w-full flex justify-between ">
-
-                                <h1 className="text-xl">{data.name}</h1>
-                                <p>{data.defaultPrice / 100 || data.price / 100}</p>
-                                <div className='flex justify-center'>
-                                    <div className="w-[180px] absolute h-[150px] rounded-xl mt-5 ">
-
-                                        <img
-                                            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_180,h_150/${data.imageId}`}
-                                            alt={" "}
-                                            className="w-full h-full  border rounded-xl contrast-110 brightness-100 saturate-125"
-                                        />
-                                    </div>
-
-                                    <div className="relative w-[180px] h-[210px] flex justify-center items-end ">
-                                        <div className="flex-col ">
-                                            <button
-                                                onClick={() => handleRemoveCart(i)}
-
-                                                className="w-[140px] h-[40px]  rounded-2xl bg-red-600 border flex justify-center items-center"
-                                            >
-                                                <p className="text-white font-bold text-[20px]">REMOVE</p>
-                                            </button>
-                                            <div className="flex justify-center">
-                                                <p className="text-xs font-semibold text-gray-400">Customisable</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    ))
-                }
-                <h1>total-{totalprice}</h1>
-                <button onClick={handleClearCart} className="bg-green-800 h-10 w-20">
-                    clearcart
-                </button>
-
+  return (
+    <div className="w-full h-auto p-5 flex flex-col items-center bg-gray-100">
+      <div className="w-full max-w-4xl flex flex-col gap-6">
+        {cartData.map((data, i) => (
+          <div
+            key={i}
+            className="flex flex-col md:flex-row items-center gap-6 p-5 bg-white shadow-md rounded-lg"
+          >
+            <div className="w-full md:w-1/4 flex-shrink-0">
+              <img
+                src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_180,h_150/${data.imageId}`}
+                alt={data.name}
+                className="w-full h-full object-cover rounded-lg"
+              />
             </div>
-        </div>
-
-    )
+            <div className="flex flex-col w-full md:w-3/4">
+              <div className="flex justify-between items-center">
+                <h1 className="text-xl font-semibold text-gray-800">{data.name}</h1>
+                <p className="text-lg font-bold text-green-600">
+                  ₹{(data.price || data.defaultPrice) / 100}
+                </p>
+              </div>
+              <p className="text-sm text-gray-500 mt-2">Customisable</p>
+              <div className="w-full  flex  justify-between ">
+                {/* <div>
+                    <p>j</p>
+                    </div> */}
+              <button
+                onClick={() => handleRemoveCart(i)}
+                className="mt-4 justify-end  px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700"
+              >
+                Remove
+              </button>
+              </div>
+              
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-10 w-full max-w-4xl flex justify-between items-center bg-white p-5 shadow-md rounded-lg">
+        <h1 className="text-xl font-bold text-gray-800">Total: ₹{totalPrice.toFixed(2)}</h1>
+        <button
+          onClick={handleClearCart}
+          className="px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-700"
+        >
+          Clear Cart
+        </button>
+      </div>
+    </div>
+  );
 }
 
-export default Cart
+export default Cart;

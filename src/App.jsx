@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import RestaurantDetails from './components/RestaurantDetails';
 import { CartContext, Visibility } from "./context/contextapi";
 import Cart from './components/Cart';
+import PopupsDemo from './components/PopupsDemo';
 // import TopItems from './components/TopItems'
 export const App = () => {
   const [open, setOpen] = useState(false);
@@ -32,6 +33,7 @@ export const App = () => {
             <Route path='/' element={<Home />}></Route>
             <Route path='/restaurant/:id' element={<RestaurantDetails />}/>
             <Route path='/Cart' element={<Cart/>}/>
+            <Route path='/Cartss' element={<PopupsDemo/>}/>
             <Route path='*' element={<h1>comming soon</h1>}/>
           </Route>
 

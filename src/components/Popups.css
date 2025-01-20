@@ -1,0 +1,87 @@
+/* Popups.css */
+.popup-demo {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .modal .close {
+    margin-top: 20px;
+    background-color: red;
+  }
+  
+  .alert {
+    background-color: #ffcccc;
+    color: #900;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px auto;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #cce5ff;
+    color: #004085;
+    padding: 15px;
+    border-radius: 5px;
+    width: 250px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .tooltip-container {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .tooltip {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+  }
+  

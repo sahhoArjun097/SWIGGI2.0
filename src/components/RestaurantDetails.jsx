@@ -5,6 +5,7 @@ import { CartContext } from '../context/contextapi';
 function RestaurantDetails() {
   const { id } = useParams();
   // console.log(id);
+
   const [menu, setMenu] = useState("")
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
@@ -27,7 +28,7 @@ function RestaurantDetails() {
     setMenuinfo(result?.data?.cards[2]?.card?.card?.info)
     setOffer(result?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers)
     let sort = (result?.data?.cards)?.filter(data => data?.groupedCard?.cardGroupMap)
-    console.log(sort) 
+    console.log(sort)
     let suggestion = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.carousel)
     setTop(suggestion)
     let actualData = (sort[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.itemCards)
@@ -95,11 +96,12 @@ function RestaurantDetails() {
     } else {
       setBackgColor2('bg-slate-200');
       setBgColor2('bg-slate-300');
-      
+
     }
   }
 
   useEffect(() => {
+
     fetchMenu()
 
   }, []);
@@ -308,9 +310,9 @@ function RestaurantDetails() {
 }
 
 
-function MenuData({ card ,menu}) {
+function MenuData({ card, menu }) {
   const [isOpen, setOpen] = useState(true);
-  
+
   function handleUpDown() {
     setOpen((prev) => !prev);
   }
@@ -331,7 +333,7 @@ function MenuData({ card ,menu}) {
               onClick={handleUpDown}
             ></i>
           </div>
-          {isOpen && <DetailMenu itemCards={itemCards}  menu={menu} />}
+          {isOpen && <DetailMenu itemCards={itemCards} menu={menu} />}
         </div>
         <hr className="my-5 border-[10px]" />
       </>
@@ -346,7 +348,7 @@ function MenuData({ card ,menu}) {
   }
 }
 
-function DetailMenu({ itemCards , menu}) {
+function DetailMenu({ itemCards, menu }) {
   return (
     <div>
       {itemCards.map(({ card: { info } }, i) => (
@@ -356,7 +358,7 @@ function DetailMenu({ itemCards , menu}) {
   );
 }
 
-function DetailMenuCard({ info,menu }) {
+function DetailMenuCard({ info, menu }) {
   const {
     name,
     description,
@@ -367,18 +369,19 @@ function DetailMenuCard({ info,menu }) {
     itemAttribute: { vegClassifier },
     ratings: { aggregatedRating: { rating, ratingCountV2 } = {} } = {}
   } = info;
-const{cartData,setCartData} = useContext(CartContext)
+  const { cartData, setCartData } = useContext(CartContext)
+  const [setNotification] = useState(null);
 
   function handleAddCart() {
     console.log(menu)
-    const isAdded = cartData.find((data)=> data.id === info.id)
-    if(!isAdded){
-      setCartData((prev)=> [...prev,info])
+    const isAdded = cartData.find((data) => data.id === info.id)
+    if (!isAdded) {
+      setCartData((prev) => [...prev, info])
       localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
-      alert("item added to cart")
-    } else{
+      setNotification({ message: "Item added to cart!", type: "success" });
+    } else {
       alert("this is already added")
-      
+
     }
     // console.log(info);
   }
@@ -438,7 +441,7 @@ const{cartData,setCartData} = useContext(CartContext)
 
             <img
               src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_180,h_150/${imageId}`}
-              alt={ " "}
+              alt={" "}
               className="w-full h-full  border rounded-xl contrast-110 brightness-100 saturate-125"
             />
           </div>
