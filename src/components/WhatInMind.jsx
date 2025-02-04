@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 function WhatInMind() {
-  const [data, setData] = useState([]); 
+  const [data, setData] = useState([]);
   const [value, setValue] = useState(0);
   const [bgColor, setBgColor] = useState("bg-slate-300");
   const [backgColor, setBackgColor] = useState("bg-slate-200");
@@ -13,16 +13,14 @@ function WhatInMind() {
       );
       const result = await response.json();
       console.log(result);
-      setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info || []); 
-      console.log(result?.data?.cards[0]?.card?.card?.imageGridCards?.info );
+      setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info || []);
+      console.log(result?.data?.cards[0]?.card?.card?.imageGridCards?.info);
       console.log(result?.data?.cards[0]?.card?.card?.imageGridCards?.info.length);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setData([]); 
+      setData([]);
     }
   }
-  
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -38,7 +36,6 @@ function WhatInMind() {
       setBackgColor("bg-slate-300");
     }
   }
-
   function handleNext() {
     if (value > 0) {
       setValue((prev) => prev - 34);
@@ -50,7 +47,6 @@ function WhatInMind() {
       setBgColor("bg-slate-300");
     }
   }
-
   return (
     <div>
       <div className="flex justify-between h-[6vh]">
@@ -73,26 +69,25 @@ function WhatInMind() {
           </div>
         </div>
       </div>
-    
-        <div
-                style={{ transform: `translateX(-${value}%)` }}
-                className={`flex mt-4  duration-1000 `}
-            >
-                {data.map((item) => (
-                    <img
-                    key={item.id}
-                        className="w-40 "
-                        src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}
-                        alt=""
-                    />
-                ))}
-            </div>
+      <div
+        style={{ transform: `translateX(-${value}%)` }}
+        className={`flex mt-4  duration-1000 `}
+      >
+        {data.map((item) => (
+          <img
+            key={item.id}
+            className="w-40 "
+            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}
+            alt=""
+          />
+        ))}
+      </div>
 
 
 
       <hr className="border-b-0 mt-8 p-1" />
     </div>
   );
-  
+
 }
 export default WhatInMind;

@@ -19,14 +19,14 @@ function Cart() {
   }
 
   // Calculate total price
-//   const totalPrice = cartData.reduce(
-//     (sum, item) => sum + (item.price || item.defaultPrice || 0) / 100,
-//     0
-//   );
+  //   const totalPrice = cartData.reduce(
+  //     (sum, item) => sum + (item.price || item.defaultPrice || 0) / 100,
+  //     0
+  //   );
 
   let totalPrice = 0.00;
   for (let i = 0; i < cartData.length; i++) {
-      totalPrice += cartData[i].price / 100 || cartData[i].defaultPrice / 100;
+    totalPrice += cartData[i].price / 100 || cartData[i].defaultPrice / 100;
   }
   // Render when the cart is empty
   if (cartData.length === 0) {
@@ -64,14 +64,14 @@ function Cart() {
                 {/* <div>
                     <p>j</p>
                     </div> */}
-              <button
-                onClick={() => handleRemoveCart(i)}
-                className="mt-4 justify-end  px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700"
-              >
-                Remove
-              </button>
+                <button
+                  onClick={() => handleRemoveCart(i)}
+                  className="mt-4 justify-end  px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700"
+                >
+                  Remove
+                </button>
               </div>
-              
+
             </div>
           </div>
         ))}
