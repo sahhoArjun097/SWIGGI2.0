@@ -58,9 +58,9 @@ const Footer = () => {
           </div>
 
           <h3 className="font-semibold text-lg mt-6 text-white">Get the App</h3>
-          <div className="flex space-x-4 mt-2">
-            <img src="/googleplay.png" alt="Google Play" className="h-12" />
-            <img src="/app.png" alt="App Store" className="h-12 rounded-lg" />
+          <div className="flex  space-x-1 md:space-x-4 mt-2">
+            <img src="/googleplay.png" alt="Google Play" className=" h-10 md:h-12" />
+            <img src="/app.png" alt="App Store" className=" h-10  md:h-12 rounded-lg" />
           </div>
         </div>
       </div>
