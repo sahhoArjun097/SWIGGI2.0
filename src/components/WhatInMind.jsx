@@ -18,11 +18,9 @@ function WhatInMind() {
       setData([]);
     }
   }
-
   useEffect(() => {
     fetchData();
   }, []);
-
   function handlePrev() {
     if (value < 180) {
       setValue((prev) => prev + 34);
@@ -30,7 +28,6 @@ function WhatInMind() {
     setBgColor(value < 5 ? "bg-slate-300" : "bg-slate-200");
     setBackgColor(value < 5 ? "bg-slate-200" : "bg-slate-300");
   }
-
   function handleNext() {
     if (value > 0) {
       setValue((prev) => prev - 34);
@@ -38,7 +35,6 @@ function WhatInMind() {
     setBackgColor(value > 0 ? "bg-slate-300" : "bg-slate-200");
     setBgColor(value > 0 ? "bg-slate-200" : "bg-slate-300");
   }
-
   return (
     <div className="w-full">
       <div className="flex justify-between items-center h-[6vh]">
@@ -58,12 +54,10 @@ function WhatInMind() {
           </div>
         </div>
       </div>
-
       <div className="mt-4  scroll-smooth no-scrollbar">
         <div
           style={{ transform: `translateX(-${value}%)` }}
-          className="flex gap-4 md:gap-6 duration-500"
-        >
+          className="flex gap-4 md:gap-6 duration-500">
           {data.map((item) => (
             <img
               key={item.id}
@@ -74,7 +68,6 @@ function WhatInMind() {
           ))}
         </div>
       </div>
-
       <hr className="border-b-0 mt-8 p-1" />
     </div>
   );

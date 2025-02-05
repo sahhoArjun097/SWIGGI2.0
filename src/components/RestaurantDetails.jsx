@@ -375,6 +375,7 @@ function DetailMenuCard({ info, menu }) {
   function handleAddCart() {
     console.log(menu)
     const isAdded = cartData.find((data) => data.id === info.id)
+    alert("item added to cart")
     if (!isAdded) {
       setCartData((prev) => [...prev, info])
       localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
