@@ -2,6 +2,8 @@
 import { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { CartContext } from '../context/contextapi';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../utils/cartSlice';
 function RestaurantDetails() {
   const { id } = useParams();
   // console.log(id);
@@ -107,71 +109,99 @@ function RestaurantDetails() {
   }, []);
   return (
     <>
-      <div className='h-[100%] mt-5 w-[100vw] flex justify-center items-center  ' >
-        <div className='h-[100%] w-[50%] flex-col gap-5  pl-2'>
-          <div className='flex-col '>
-            <div className='h-10  gap-2  w-full flex'>
-              <p className='text-xs text-gray-600 text-[7px]'>Home /</p>
-              <p className='text-xs text-gray-600 text-[7px]'>{info?.city} /</p>
-              <p className="  text-[7px] text-xs">{menu?.text}</p>
+      <div className='h-[100%] mt-5 w-full flex justify-center items-center  ' >
+        <div className='h-[100%] w-[80%] md:w-[50%] flex-col gap-5  pl-2'>
+          {/*  */}
+          <div className="flex flex-col w-full px-3 md:px-6">
+            {/* Breadcrumbs */}
+            <div className="h-5 md:h-10 flex gap-2 w-full flex-wrap items-center">
+              <p className="text-[7px] md:text-xs text-gray-600">Home /</p>
+              <p className="text-[7px] md:text-xs text-gray-600">{info?.city} /</p>
+              <p className="text-[7px] md:text-xs">{menu?.text}</p>
             </div>
-          </div>
-          <div className='w-full '>
-            <div className='w-full h-full p-3  '>
-              <p className='font-bold text-xl'>{menu?.text}</p>
-            </div>
-          </div>
-          <div className='w-full h-6'>
-            <div className='flex w-full pl-6  gap-5'>
-              <p className='text-[14px]  font-bold'>Order Online</p>
-              <p className='text-[14px]  font-bold '>Dineout</p>
-            </div>
-            <div className='w-[95px] bg-red-500 h-[3px] ml-5 mt-1 rounded-lg '></div>
-            <hr className='border-b-0' />
-          </div>
-          <div className=' w-full p-3 from-gray-300  rounded-3xl  bg-gradient-to-t from-1% to-transparent to-100%  '>
-            <div className=' border  mt-2 h-36 w-[100%] bg-white p-3 rounded-2xl'>
-              <div className='w-[400px]  gap-2   justify-start flex items-start'>
-                <img src="/images/circle-star.png" alt="" className=" mt-[3px] h-[15px]" />
-                <p className='text-[13px] font-bold'>{info?.avgRatingString}( {info?.totalRatingsString})</p>
-                <p className='  ' ></p>
-                <p className='text-[13px] font-bold'>{info?.costForTwoMessage}</p>
+
+            {/* Menu Title */}
+            <div className="w-full">
+              <div className="w-full h-full p-3">
+                <p className="font-bold text-lg md:text-xl">{menu?.text}</p>
               </div>
-              <div className='w-[200px]   justify-start flex items-start'>
-                <p className='text-[12px] font-bold text-orange-600 underline'>{info?.cuisines?.join(", ")}</p>
+            </div>
+
+            {/* Order Options */}
+            <div className="w-full h-6">
+              <div className="flex w-full pl-4 md:pl-6 gap-3 md:gap-5 flex-wrap">
+                <p className="text-[12px] md:text-[14px] font-bold">Order Online</p>
+                <p className="text-[12px] md:text-[14px] font-bold">Dineout</p>
               </div>
-              <div className='w-[400px] flex gap-3  pt-[3px]'>
-                <div className='flex-col justify-center flex items-center'>
-                  <div className='w-[6px] h-[6px] mt-[8px]  bg-gray-300 rounded-full'></div>
-                  <div className='h-[20px] w-2  flex justify-center  items-center'>
-                    <div className='h-full w-[1px] bg-gray-300'></div>
-                  </div>
-                  <div className='w-[6px] h-[6px] bg-gray-300 rounded-full'></div>
+
+              {/* Red Underline Indicator */}
+              <div className="w-[80px] md:w-[95px] bg-red-500 h-[3px] ml-4 md:ml-5 mt-1 rounded-lg"></div>
+
+              <hr className="border-b-0" />
+            </div>
+          </div>
+
+          {/*  */}
+          <div className="w-full p-3 rounded-3xl bg-gradient-to-t from-gray-300 from-1% to-transparent to-100%">
+            <div className="border mt-2 h-auto md:h-36 w-full bg-white p-3 rounded-2xl">
+
+              {/* Rating, Cost, and Info Section */}
+              <div className="w-full flex flex-col md:flex-row gap-2 items-start">
+                <div className="flex items-center gap-2">
+                  <i className="fi fi-ss-star mt-[1px]  text-green-800 font-semibold"></i>
+                  <p className="text-sm md:text-[13px] font-bold">
+                    {info?.avgRatingString} ({info?.totalRatingsString})
+                  </p>
                 </div>
-                <div className='flex-col'>
-                  <div className='flex gap-2'>
-                    <div className='h-[20px] gap-3 flex'>
-                      <p className='text-[13px] font-bold'>Outlet</p>
-                      <p className='text-[13px] font-semibold'>{info?.areaName}</p>
-                    </div>
+                <p className="text-sm md:text-[13px] font-bold">{info?.costForTwoMessage}</p>
+              </div>
+
+          
+              <div className="w-full md:w-[200px] flex flex-wrap items-start">
+                <p className="text-sm md:text-[12px] font-bold text-orange-600 underline">
+                  {info?.cuisines?.join(", ")}
+                </p>
+              </div>
+
+              {/* Outlet Info and Delivery Time */}
+              <div className="w-full flex gap-3 pt-[3px]">
+       
+                <div className="flex flex-col justify-center items-center">
+                  <div className="w-[6px] h-[6px] mt-[8px] bg-gray-300 rounded-full"></div>
+                  <div className="h-[20px] w-2 flex justify-center items-center">
+                    <div className="h-full w-[1px] bg-gray-300"></div>
                   </div>
-                  <div className='mt-2' >
-                    <p className='text-[12px] font-bold'>{`${info?.sla?.minDeliveryTime} - ${info?.sla?.maxDeliveryTime} min`}</p>
-                  </div>
+                  <div className="w-[6px] h-[6px] bg-gray-300 rounded-full"></div>
                 </div>
 
+                {/* Outlet Name and Delivery Time */}
+                <div className="flex flex-col">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-sm md:text-[13px] font-bold">Outlet</p>
+                    <p className="text-sm md:text-[13px] font-semibold">{info?.areaName}</p>
+                  </div>
+                  <div className="mt-2">
+                    <p className="text-xs md:text-[12px] font-bold">
+                      {`${info?.sla?.minDeliveryTime} - ${info?.sla?.maxDeliveryTime} min`}
+                    </p>
+                  </div>
+                </div>
               </div>
+
               <hr />
-              <div className='w-full h-full pt-2'>
-                <div className='  flex gap-3'>
-                  <i className="fi fi-rs-biking-mountain text-[13px] text-gray-500"></i>
-                  <p className='text-[10px]  text-gray-500 font-semibold'>{info?.feeDetails?.message}</p>
+
+              {/* Delivery Message */}
+              <div className="w-full h-full pt-2">
+                <div className="flex gap-3 items-center">
+                  <i className="fi fi-rs-biking-mountain text-sm md:text-[13px] text-gray-500"></i>
+                  <p className="text-[10px] md:text-xs text-gray-500 font-semibold">
+                    {info?.feeDetails?.message}
+                  </p>
                 </div>
               </div>
-
             </div>
           </div>
-
+          {/*  */}
           <div className='h-40 w-[100%] mt-5 flex-col overflow-x-hidden'>
             <div className='ml-1 flex justify-between p-3'>
               <p className='font-bold text-lg'>Deals for you</p>
@@ -190,7 +220,7 @@ function RestaurantDetails() {
                 className={` flex duration-1000 gap-5 w-full h-full`}>
                 {
                   deals.map((item, i) => (
-                    <div key={i} className='w-[270px] h-16 border flex   rounded-2xl'>
+                    <div key={i} className='w-[270px] h-16 border flex rounded-2xl'>
                       <div className='p-2'>
                         <img src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/${item?.info?.offerLogo}`} alt="" className=" h-[41px] " />
                       </div>
@@ -204,6 +234,7 @@ function RestaurantDetails() {
               </div>
             </div>
           </div>
+          {/*  */}
           <div className='flex justify-center items-center'>
             <div className=''>
               <p className='font-extralight text-gray-500 text-[15px]'>MENU</p>
@@ -369,24 +400,24 @@ function DetailMenuCard({ info, menu }) {
     itemAttribute: { vegClassifier },
     ratings: { aggregatedRating: { rating, ratingCountV2 } = {} } = {}
   } = info;
-  const { cartData, setCartData } = useContext(CartContext)
-  const [setNotification] = useState(null);
 
+  const cartData = useSelector((state)=>state.cartSlice.cartItems)
+
+  const dispatch = useDispatch()
   function handleAddCart() {
     console.log(menu)
     const isAdded = cartData.find((data) => data.id === info.id)
-    alert("item added to cart")
     if (!isAdded) {
-      setCartData((prev) => [...prev, info])
-      localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
-      setNotification({ message: "Item added to cart!", type: "success" });
+      dispatch(addToCart({info}))
+      alert("item added to cart")
+      // setCartData((prev) => [...prev, info])
+      // localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
+      // setNotification({ message: "Item added to cart!", type: "success" });
     } else {
       alert("this is already added")
 
     }
-    // console.log(info);
   }
-
   return (
     <div className="flex-col gap-5 w-full">
       <div className="flex gap-5 h-[200px] justify-between">

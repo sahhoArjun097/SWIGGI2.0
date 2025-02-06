@@ -6,7 +6,7 @@ const toogleSlice =  createSlice({
         searchToogle :false,
     },
     reducers:{
-        tooglepopbar : ( state, action) => { 
+        tooglepopbar : ( state) => { 
             state.searchToogle = !state.searchToogle
         }
 

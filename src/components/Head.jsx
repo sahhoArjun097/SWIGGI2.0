@@ -1,19 +1,19 @@
-import { useContext } from "react";
+
 import { Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { tooglepopbar } from "../utils/toogleSlice";
-import { CartContext } from "../context/contextapi";
+
 
 function Head() {
-  const { cartData } = useContext(CartContext);
+  
+  const cartData = useSelector((state)=> state.cartSlice.cartItems)
   const dispatch = useDispatch();
   
-  // Get `open` state from Redux
   const open = useSelector((state) => state.toogleSlice.searchToogle);
 
-  // Correct function to toggle the search sidebar
+
   function handleArrowGo() {
-    dispatch(tooglepopbar()); // Toggle Redux state
+    dispatch(tooglepopbar()); 
   }
 
   const navItems = [
@@ -30,7 +30,7 @@ function Head() {
         <div className="w-full z-10 h-[100vh] absolute bg-black/40">
           <div className="w-[40%] h-full bg-white overflow-y-hidden">
             <div className="w-full h-full p-10 flex flex-col gap-7">
-              {/* Close button */}
+          
               <p className="flex text-black" onClick={handleArrowGo}>
                 <i className="fi fi-rr-cross-small text-3xl"></i>
               </p>

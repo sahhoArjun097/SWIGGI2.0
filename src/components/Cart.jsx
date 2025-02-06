@@ -1,20 +1,20 @@
-import { useContext } from "react";
-import { CartContext } from "../context/contextapi";
+
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart, deleteItem } from "../utils/cartSlice";
 
 function Cart() {
-  const { cartData, setCartData } = useContext(CartContext);
+  const cartData = useSelector((state) => state.cartSlice.cartItems)
+  console.log(cartData)
+  const dispatch = useDispatch()
 
-  // Handle removing a specific item from the cart
   function handleRemoveCart(i) {
     const newArr = [...cartData];
     newArr.splice(i, 1);
-    setCartData(newArr);
-    localStorage.setItem("cartData", JSON.stringify(newArr));
-  }
+    dispatch(deleteItem(newArr))
 
-  // Clear the entire cart
+  }
   function handleClearCart() {
-    setCartData([]);
+    dispatch(clearCart())
     localStorage.removeItem("cartData");
   }
 
@@ -28,7 +28,7 @@ function Cart() {
   for (let i = 0; i < cartData.length; i++) {
     totalPrice += cartData[i].price / 100 || cartData[i].defaultPrice / 100;
   }
-  // Render when the cart is empty
+ 
   if (cartData.length === 0) {
     return (
       <div className="w-full h-[80vh] flex justify-center items-center">
@@ -80,8 +80,9 @@ function Cart() {
         <h1 className="text-xl font-bold text-gray-800">Total: ₹{totalPrice.toFixed(2)}</h1>
         <button
           onClick={handleClearCart}
-          className="px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-700"
+          className="px-5 py-3 text-[12px] bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-700"
         >
+          {/* PROCEED TO PAY */}
           Clear Cart
         </button>
       </div>

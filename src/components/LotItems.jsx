@@ -17,7 +17,7 @@ function LotItems() {
   }, []);
 
   return (
-    <div className='w-full h-full flex flex-col mt-7 px-2 md:px-8 lg:px-12'>
+    <div className='w-full h-full flex flex-col mt-7 px-2 md:px-2 '>
       <h1 className="font-bold text-2xl text-center md:text-left">{title?.title}</h1>
       
       <div className="flex flex-wrap gap-2 mt-5 justify-center md:justify-start">
