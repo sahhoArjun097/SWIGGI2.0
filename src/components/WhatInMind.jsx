@@ -42,13 +42,13 @@ function WhatInMind() {
         <div className="h-[35px] w-[100px] flex gap-2">
           <div
             onClick={handlePrev}
-            className={`${bgColor} cursor-pointer rounded-full w-[35px] h-[35px] flex items-center justify-center`}
+            className={`${bgColor} cursor-pointer rounded-full w-[25px] h-[25px] md:w-[35px] md:h-[35px] flex items-center justify-center`}
           >
             <i className="fi fi-tr-arrow-small-right text-xl md:text-2xl"></i>
           </div>
           <div
             onClick={handleNext}
-            className={`${backgColor} cursor-pointer rounded-full w-[35px] h-[35px] flex items-center justify-center`}
+            className={`${backgColor} cursor-pointer rounded-full w-[25px] h-[25px] md:w-[35px] md:h-[35px] flex items-center justify-center`}
           >
             <i className="fi fi-tr-arrow-small-left text-xl md:text-2xl"></i>
           </div>

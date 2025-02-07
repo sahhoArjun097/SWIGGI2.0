@@ -1,9 +1,13 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, deleteItem } from "../utils/cartSlice";
+import { useNavigate } from "react-router-dom";
+
 
 function Cart() {
+  const navigate  = useNavigate()
   const cartData = useSelector((state) => state.cartSlice.cartItems)
+  const userData = useSelector((state) => state.authSlice.userData);
   console.log(cartData)
   const dispatch = useDispatch()
 
@@ -12,6 +16,16 @@ function Cart() {
     newArr.splice(i, 1);
     dispatch(deleteItem(newArr))
 
+  }
+  function  handlePlacePay(){
+    if(!userData){
+      alert("Please login")
+      navigate("/sign")
+      
+       return
+
+    }
+    alert("Order Placed")
   }
   function handleClearCart() {
     dispatch(clearCart())
@@ -77,7 +91,18 @@ function Cart() {
         ))}
       </div>
       <div className="mt-10 w-full max-w-4xl flex justify-between items-center bg-white p-5 shadow-md rounded-lg">
+        <div className="flex gap-3 ">
+
         <h1 className="text-xl font-bold text-gray-800">Total: ₹{totalPrice.toFixed(2)}</h1>
+        <button
+          onClick={handlePlacePay}
+          className="p-3 text-[12px] bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-700"
+        >
+          PROCEED TO PAY
+          {/* Clear Cart */}
+        </button>
+
+        </div>
         <button
           onClick={handleClearCart}
           className="px-5 py-3 text-[12px] bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-700"

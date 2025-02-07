@@ -11,6 +11,9 @@ function LotItems() {
     setData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || []);
     setTitle(result?.data?.cards[2]?.card?.card || {});
   }
+   const filterItems = [
+    "Filter", "Sort By", "Fast Delivery", "New on Swiggy", "Ratings 4.0+", "Pure Veg", "Offers", "Rs. 300-Rs. 600", "Less than Rs. 300"
+  ]
 
   useEffect(() => {
     fetchData();
@@ -21,9 +24,7 @@ function LotItems() {
       <h1 className="font-bold text-2xl text-center md:text-left">{title?.title}</h1>
       
       <div className="flex flex-wrap gap-2 mt-5 justify-center md:justify-start">
-        {[
-          "Filter", "Sort By", "Fast Delivery", "New on Swiggy", "Ratings 4.0+", "Pure Veg", "Offers", "Rs. 300-Rs. 600", "Less than Rs. 300"
-        ].map((text, index) => (
+        {filterItems.map((text, index) => (
           <button 
             key={index} 
             className="px-3 py-2 border border-gray-300 rounded-2xl text-gray-600 text-sm font-semibold flex items-center gap-1">
