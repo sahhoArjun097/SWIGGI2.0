@@ -96,7 +96,7 @@ function TopItems() {
               <div className="p-2">
                 <p className="font-bold text-lg line-clamp-1">{item?.info?.name}</p>
                 <div className="flex gap-2">
-                <i className="fi fi-ss-star mt-[1px] text-green-800 font-semibold"></i>
+                  <i className="fi fi-ss-star mt-[1px] text-green-800 font-semibold"></i>
                   <p className="font-semibold">{item?.info?.avgRating}</p>
                   <p className="font-semibold">{item?.info?.sla?.slaString}</p>
                 </div>

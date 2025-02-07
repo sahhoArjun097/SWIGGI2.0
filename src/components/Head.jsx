@@ -108,7 +108,7 @@ function Head() {
                 <Link to={item.path} key={index} className="flex gap-2 items-center text-gray-600 hover:text-orange-500">
                   {userData ? <img src={userData?.photo} className="h-9  w-9 rounded-3xl" alt="" /> : <i className={`${item.icon} text-lg`}></i>}
                   <p className="font-bold">{userData ? userData.name : item.name} </p>
-                  { userData &&  item.name === "Cart" && cartData.length > 0 && (
+                  {userData && item.name === "Cart" && cartData.length > 0 && (
                     <span className="text-white bg-orange-500 text-xs rounded-full px-2 py-0.5">
                       {cartData.length}
                     </span>
@@ -117,7 +117,7 @@ function Head() {
                 : <Link to={item.path} key={index} className="flex gap-2 items-center text-gray-600 hover:text-orange-500">
                   <i className={`${item.icon} text-lg`}></i>
                   <p className="font-bold">{item.name}</p>
-                   {userData &&  item.name === "Cart" && cartData.length > 0 && (
+                  {userData && item.name === "Cart" && cartData.length > 0 && (
                     <span className="text-white bg-orange-500 text-xs rounded-full px-2 py-0.5">
                       {cartData.length}
                     </span>

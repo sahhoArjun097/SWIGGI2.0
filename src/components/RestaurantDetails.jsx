@@ -156,7 +156,7 @@ function RestaurantDetails() {
                 <p className="text-sm md:text-[13px] font-bold">{info?.costForTwoMessage}</p>
               </div>
 
-          
+
               <div className="w-full md:w-[200px] flex flex-wrap items-start">
                 <p className="text-sm md:text-[12px] font-bold text-orange-600 underline">
                   {info?.cuisines?.join(", ")}
@@ -165,7 +165,7 @@ function RestaurantDetails() {
 
               {/* Outlet Info and Delivery Time */}
               <div className="w-full flex gap-3 pt-[3px]">
-       
+
                 <div className="flex flex-col justify-center items-center">
                   <div className="w-[6px] h-[6px] mt-[8px] bg-gray-300 rounded-full"></div>
                   <div className="h-[20px] w-2 flex justify-center items-center">
@@ -401,14 +401,14 @@ function DetailMenuCard({ info, menu }) {
     ratings: { aggregatedRating: { rating, ratingCountV2 } = {} } = {}
   } = info;
 
-  const cartData = useSelector((state)=>state.cartSlice.cartItems)
+  const cartData = useSelector((state) => state.cartSlice.cartItems)
 
   const dispatch = useDispatch()
   function handleAddCart() {
     console.log(menu)
     const isAdded = cartData.find((data) => data.id === info.id)
     if (!isAdded) {
-      dispatch(addToCart({info}))
+      dispatch(addToCart({ info }))
       alert("item added to cart")
       // setCartData((prev) => [...prev, info])
       // localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
