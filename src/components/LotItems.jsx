@@ -20,7 +20,12 @@ function LotItems() {
   }, []);
 
   return (
+
     <div className='w-full h-full flex flex-col mt-7 px-2 md:px-2 '>
+      {
+        
+      }
+
       <h1 className="font-bold text-2xl text-center md:text-left">{title?.title}</h1>
       
       <div className="flex flex-wrap gap-2 mt-5 justify-center md:justify-start">
@@ -34,6 +39,7 @@ function LotItems() {
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-7">
+
         {data.map((item, i) => (
           <Link key={i} to={`/restaurant/${item?.info?.id}`} className="block">
             <div className="relative">

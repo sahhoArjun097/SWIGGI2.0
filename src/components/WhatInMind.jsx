@@ -12,7 +12,9 @@ function WhatInMind() {
         "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
       );
       const result = await response.json();
-      setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info || []);
+      let whatinMind =  result?.data?.cards.find((data )=> data?.card?.card?.id == "whats_on_your_mind").card?.card?.imageGridCards?.info
+      // console.log(whatinMind)
+     setData(whatinMind || []);
     } catch (error) {
       console.error("Error fetching data:", error);
       setData([]);

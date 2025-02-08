@@ -11,9 +11,12 @@ function TopItems() {
   async function fetchData() {
     const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
     const result = await data.json();
-    console.log(result);
-    setData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setHeader(result?.data?.cards[1]?.card?.card);
+    // console.log(result);
+    let topItems = result?.data?.cards.find((data)=> data?.card?.card?.id == "top_brands_for_you").card?.card
+    // console.log(topItems)
+    let restaurants  = result?.data?.cards.find((data)=> data?.card?.card?.id == "top_brands_for_you").card?.card?.gridElements?.infoWithStyle?.restaurants
+    setData(restaurants);
+    setHeader(topItems);
   }
 
   useEffect(() => {
