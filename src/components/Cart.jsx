@@ -1,48 +1,37 @@
-
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, deleteItem } from "../utils/cartSlice";
 import { useNavigate } from "react-router-dom";
 
-
 function Cart() {
-  const navigate  = useNavigate()
-  const cartData = useSelector((state) => state.cartSlice.cartItems)
+  const navigate = useNavigate();
+  const cartData = useSelector((state) => state.cartSlice.cartItems);
   const userData = useSelector((state) => state.authSlice.userData);
-  console.log(cartData)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   function handleRemoveCart(i) {
-    const newArr = [...cartData];
-    newArr.splice(i, 1);
-    dispatch(deleteItem(newArr))
-
+    dispatch(deleteItem(cartData.filter((_, index) => index !== i)));
   }
-  function  handlePlacePay(){
-    if(!userData){
-      alert("Please login")
-      navigate("/sign")
-      
-       return
 
+  function handlePlacePay() {
+    if (!userData) {
+      alert("Please login");
+      navigate("/sign");
+      return;
     }
-    alert("Order Placed")
+    alert("Order Placed");
   }
+
   function handleClearCart() {
-    dispatch(clearCart())
+    dispatch(clearCart());
     localStorage.removeItem("cartData");
   }
 
-  // Calculate total price
-  //   const totalPrice = cartData.reduce(
-  //     (sum, item) => sum + (item.price || item.defaultPrice || 0) / 100,
-  //     0
-  //   );
+  let totalPrice = cartData.reduce(
+    (sum, item) => sum + (item.price || item.defaultPrice || 0) / 100,
+    0
+  );
 
-  let totalPrice = 0.00;
-  for (let i = 0; i < cartData.length; i++) {
-    totalPrice += cartData[i].price / 100 || cartData[i].defaultPrice / 100;
-  }
- 
+  // If cart is empty, show "KUCH ORDER KR LO..."
   if (cartData.length === 0) {
     return (
       <div className="w-full h-[80vh] flex justify-center items-center">
@@ -74,40 +63,37 @@ function Cart() {
                 </p>
               </div>
               <p className="text-sm text-gray-500 mt-2">Customisable</p>
-              <div className="w-full  flex  justify-between ">
-                {/* <div>
-                    <p>j</p>
-                    </div> */}
+              <div className="w-full flex justify-between">
                 <button
                   onClick={() => handleRemoveCart(i)}
-                  className="mt-4 justify-end  px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700"
+                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700"
                 >
                   Remove
                 </button>
               </div>
-
             </div>
           </div>
         ))}
       </div>
+
       <div className="mt-10 w-full max-w-4xl flex justify-between items-center bg-white p-5 shadow-md rounded-lg">
-        <div className="flex gap-3 ">
-
-        <h1 className="text-xl font-bold text-gray-800">Total: ₹{totalPrice.toFixed(2)}</h1>
-        <button
-          onClick={handlePlacePay}
-          className="p-3 text-[12px] bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-700"
-        >
-          PROCEED TO PAY
-          {/* Clear Cart */}
-        </button>
-
+        <div className="flex gap-3">
+          <h1 className="text-xl font-bold text-gray-800">Total: ₹{totalPrice.toFixed(2)}</h1>
+          <button
+            onClick={handlePlacePay}
+            className={`p-3 text-[12px] font-bold rounded-lg shadow ${
+              userData ? "bg-green-600 hover:bg-green-700 text-white" : "bg-gray-400 text-gray-200 cursor-not-allowed"
+            }`}
+            disabled={!userData}
+          >
+            {userData ? "PROCEED TO PAY" : "LOGIN TO PAY"}
+          </button>
         </div>
+
         <button
           onClick={handleClearCart}
-          className="px-5 py-3 text-[12px] bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-700"
+          className="px-5 py-3 text-[12px] bg-red-600 text-white font-bold rounded-lg shadow hover:bg-red-700"
         >
-          {/* PROCEED TO PAY */}
           Clear Cart
         </button>
       </div>
