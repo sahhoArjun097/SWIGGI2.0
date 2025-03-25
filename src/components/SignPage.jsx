@@ -9,13 +9,13 @@ function SignPage() {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.authSlice.userData);
   const dispatch = useDispatch();
-
+console.log(userData)
   async function handleAuth() {
     try {
       const result = await signInWithPopup(auth, provider);
       const userData = {
         name: result.user.displayName,
-        photo: result.user.photoURL,
+        photo: result.user.photo,
       };
       dispatch(addUser(userData));
       navigate("/");
