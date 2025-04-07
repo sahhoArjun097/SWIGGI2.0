@@ -13,6 +13,7 @@ console.log(userData)
   async function handleAuth() {
     try {
       const result = await signInWithPopup(auth, provider);
+      console.log(result)
       const userData = {
         name: result.user.displayName,
         photo: result.user.photo,
@@ -40,7 +41,7 @@ console.log(userData)
           <div>
             <img
               src={userData.photo}
-              alt="Profile"
+              alt=""
               className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white"
             />
             <h2 className="text-2xl font-bold text-white">{userData.name}</h2>
