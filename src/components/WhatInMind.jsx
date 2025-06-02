@@ -9,7 +9,7 @@ function WhatInMind() {
   async function fetchData() {
     try {
       const response = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        "https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
       );
       const result = await response.json();
       let whatinMind =  result?.data?.cards.find((data )=> data?.card?.card?.id == "whats_on_your_mind").card?.card?.imageGridCards?.info

@@ -6,7 +6,7 @@ function LotItems() {
   const [title, setTitle] = useState([]);
 
   async function fetchData() {
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
     const result = await data.json();
     setData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || []);
     setTitle(result?.data?.cards[2]?.card?.card || {});
