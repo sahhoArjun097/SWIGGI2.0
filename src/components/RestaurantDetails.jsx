@@ -22,9 +22,8 @@ function RestaurantDetails() {
   // const [inner, setInner] = useState([])
   // const[drop,setDrop] = useState(null)
   async function fetchMenu() {
-    const data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.6616862&lng=77.2304635&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`)
+    const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.6616862&lng=77.2304635&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`)
     const result = await data.json();
-    
     console.log(result?.data)
     console.log(result?.data?.cards)
     setMenu(result?.data?.cards[0]?.card?.card)

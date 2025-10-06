@@ -9,7 +9,7 @@ function TopItems() {
   const [move, setMove] = useState(0);
 
   async function fetchData() {
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.6616862&lng=77.2304635&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
     const result = await data.json();
     // console.log(result);
     let topItems = result?.data?.cards.find((data)=> data?.card?.card?.id == "top_brands_for_you").card?.card
